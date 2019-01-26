@@ -3,7 +3,9 @@
 ## What is it?
 Linux is an open source computer operating system, initially developed on and for Intel x86-based personal computers. It has been subsequently ported to an astoundingly long list of other hardware platforms, from tiny embedded appliances to the world's largest supercomputers.
 
-![](images/linuxLogo.jpg)
+<div align="center">
+	<img src="images/linuxLogo.jpg">
+</div>
 
 ## History
 Linus Torvalds was a student in Helsinki, Finland, in 1991, when he started a project: writing his own operating system kernel. He also collected together and/or developed the other essential ingredients required to construct an entire operating system with his kernel at the center. It wasn't long before this became known as the Linux kernel. 
@@ -16,7 +18,9 @@ Today, Linux powers more than half of the servers on the Internet, the majority 
 
 Linus named his OS kernel Linux and shows a penguin as it mascot after a little incident at the zoo.
 
-![](images/LFS01_ch02_sectiom_01_screen05.jpg)
+<div align="center">
+	<img src="images/LFS01_ch02_sectiom_01_screen05.jpg"/>
+</div>
 
 ## Philosophy
 Linux is constantly enhanced and maintained by a network of developers from all over the world collaborating over the Internet, with Linus Torvalds at the head. Technical skill, a desire to contribute, and the ability to collaborate with others are the only qualifications for participating.
@@ -45,7 +49,9 @@ __Note__: Linux was inspired by UNIX, but it is not UNIX.
 ## Distributions
 The Linux kernel is the core of the operating system. A full Linux distribution consists of the kernel plus a number of other software tools for file-related operations, user management, and software package management. 
 
-![](images/distroroles.png)
+<div align="center">
+	<img src="images/distroroles.png"/>
+</div>
 
 Large organizations, such as companies and governmental institutions and other entities, tend to choose the major commercially-supported distributions from Red Hat, SUSE, and Canonical (Ubuntu).
 
