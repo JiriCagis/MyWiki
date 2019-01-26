@@ -50,7 +50,7 @@ __Note__: Linux was inspired by UNIX, but it is not UNIX.
 The Linux kernel is the core of the operating system. A full Linux distribution consists of the kernel plus a number of other software tools for file-related operations, user management, and software package management. 
 
 <div align="center">
-	<img src="images/distroroles.png"/>
+	<img src="images/distroroles.png" width="70%"/>
 </div>
 
 Large organizations, such as companies and governmental institutions and other entities, tend to choose the major commercially-supported distributions from Red Hat, SUSE, and Canonical (Ubuntu).
