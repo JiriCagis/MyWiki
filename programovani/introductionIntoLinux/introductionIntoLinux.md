@@ -200,10 +200,31 @@ Show disk usage. The default output is good enough – it lists every filesystem
 ### dd
 Convert and copy a file, according to its manpage. Not exactly the clearest or most useful description around, and yet, that’s all dd does. You give it a source and a destination, and optionally some other commands, and it copies from one to the other. Its power comes from the flexibility – you can tell it the exact block size, it can copy around corrupted data, and it isn’t picky about devices – if you want to overwrite your hard drive with zeroes straight from /dev/zero, you’re welcome to do it. It’s also commonly used for creating live USB sticks from hybrid ISO images.
 
-#### mount / unmount
+### mount / unmount
 This pair takes care of mounting and unmounting filesystems. This can range from USB sticks to ISO images. Usually only root has mounting privileges.
 
 ## Linux commands for text processing
+
+### more and less
+These two similar utilities allow you to view text chunked into screenfuls. Imagine a very long output from some command. Perhaps you called cat on a file and your terminal emulator took a few seconds to scroll all the text. Well, if you pipe it into one of these, you can now scroll it at your leisure. Less is newer and offers more options, so there is no reason to use more.
+
+### head and tail
+Another pair, but here both halves have their uses. Head outputs a number of the first (“head”) lines of a file, while tail outputs a number of last (“tail”) lines of a file. The default number is ten, but this can be controlled via the -n option. Another useful switch is -f, which is short for “follow”, which continually outputs any appended lines – so, for instance, if you wanted to monitor a log file instead of constantly opening and closing it, you could use “tail -f /path/to/logfile”.
+
+### grep
+Grep, like all good Unix tools, does one thing, but does it well. It searches text for patterns. By default it looks at standard input, but you can specify files to be searched. A pattern can be a normal string or a regular expression. It can print out matching or non-matching lines, and their context. Every time you run a command which spews a lot of information you don’t need, pipe it into grep and let it do its magic.
+
+### sort
+Sorts lines of text by various criteria. Among the more useful, there’s -n, which sorts by the numeric value of a string, and -r, which reverses the output. An example of where this might come in handy is sorting du output – for example, if you wanted to see the files sorted in descending order according to size, you’d combine the two options.
+
+### wc
+The command line word counting utility. And line counting. And byte counting. And character counting.
+
+### diff
+Shows the difference between two files via line by line comparison. It only shows altered lines, abbreviating changed as c, deleted as d and added as a.
+
+
+### 
 
 
 
