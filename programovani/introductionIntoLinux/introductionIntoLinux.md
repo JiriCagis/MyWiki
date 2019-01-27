@@ -111,7 +111,7 @@ Linux uses the ‘/’ character to separate paths (unlike Windows, which uses �
 * What hardware are you running on? For example, it might be X86, ARM, PPC, etc.
 * Do you need long-term stability? Can you accept (or need) a more volatile cutting edge system running the latest software?
 
-## Command line
+## Terminal
 Linux system administrators spend a significant amount of their time at a command line prompt. They often automate and troubleshoot tasks in this text environment. There is a saying, "graphical user interfaces make easy tasks easier, while command line interfaces make difficult tasks possible". Linux relies heavily on the abundance of command line tools. 
 
 The command line interface provides the following advantages:
@@ -146,3 +146,64 @@ To switch between VTs, press CTRL-ALT-function key for the VT. For example, pres
 **Sudo**
 
 The user with administrative (admin) privileges when required. sudo allows users to run programs using the security privileges of another user, generally root (superuser). The functionality of sudo is similar to that of run as in Windows.
+
+## Commands for file system management
+
+### ls
+By default, list the contents of the current directory. If you provide it a path, it will list the contents of that. Useful options to know are -l and -a, a long list format with more information and show hidden (dot) files, respectively.
+
+### cat
+If given a single file, prints its contents to the standard output. If you give it more than one file, it will concatenate them, and you can then redirect the output into a new file. Potentially useful is the -n option, which numbers the lines.
+
+### cd
+Allows you to go from current directory to specified directory. Calling it without arguments returns you to your home directory. Calling it with two dots (cd ..) returns you to a directory “above” the current one, while calling it with a dash (cd -) returns you to the previous directory, regardless of where it’s located relative to the current one.
+
+### pdw
+Prints your current directory. Useful if your prompt doesn’t contain this information, and especially useful in BASH programming for obtaining a reference to the directory in which you’re executing the code.
+
+### mkdir
+Create new directories. The most handy switch is -p, which creates the entire specified structure if it doesn’t exist already.
+
+### file
+Tells you the type of a file. Since files in Linux aren’t under obligation to have extensions for the system to work (not that having extensions always helps), sometimes it’s hard for the user to know what type of file something is, and this little utility solves that problem.
+
+### cp
+Copies files and directories. Since it doesn’t copy directories recursively by default, remember to use -r or -a. The latter preserves mode, ownership and time stamp info in addition to recursively copying.
+
+### mv
+Moves or renames files and directories. Essentially, moving and renaming is one operation – renaming is just “moving” a single file to the same place under a different name.
+
+### rm
+Delete files and directories. Certainly a very useful command to know, as you cannot remove clutter without it. However, beware when using it. Although nowadays you’d really have to work on it to cause some damage to the system, you can still damage yourself – rm doesn’t remove files to some imaginary wastebasket from which you can fish them out later when you realize you’ve made a horrible mistake, and “rm ate my homework” isn’t going to convince anyone. Deleting directories requires recursive operation, so once again we have the -r switch.
+
+### ln
+Creates hard or symbolic links between files. Symbolic or soft links are sort of like Windows shortcuts, they provide a convenient way of accessing a particular file, though the analogy doesn’t quite hold – symlinks can point to anything, but do not feature any metadata. You aren’t very likely to ever use hard links, but knowing they’re aliases to files – as opposed to symlinks, which are aliases to file names – can’t hurt.
+
+### chmod
+Change user permissions. This refers to viewing, writing and executing files. A normal user may change permissions for files he owns.
+
+### chown
+Change file ownership. Only the root user may change the owner of a file. To recursively change the owner for all the files in a directory, use it with -R.
+
+### find
+Search the filesystem for files or directories. Find is a very versatile and powerful command, not only because of its searching capabilities, but also because it allows you to execute arbitrary commands on matching (or non-matching, even) files.
+
+### locate
+Unlike find, locate searches the updatedb database for file name patterns. This database contains a snapshot of the filesystem. This makes locate very fast, but also unreliable – it cannot tell whether anything changed since the last snapshot.
+
+### du
+Show file or directory size. Among the more useful options are -h, which converts the reported sizes into a more human-friendly format, -s which gives only a summary instead of the whole listing, and -d which controls the depth of directory recursion.
+
+### df
+Show disk usage. The default output is good enough – it lists every filesystem, reports its size and the amount of used and available space – but you might want to tack on -h, which once again provides a more human-friendly report.
+
+### dd
+Convert and copy a file, according to its manpage. Not exactly the clearest or most useful description around, and yet, that’s all dd does. You give it a source and a destination, and optionally some other commands, and it copies from one to the other. Its power comes from the flexibility – you can tell it the exact block size, it can copy around corrupted data, and it isn’t picky about devices – if you want to overwrite your hard drive with zeroes straight from /dev/zero, you’re welcome to do it. It’s also commonly used for creating live USB sticks from hybrid ISO images.
+
+#### mount / unmount
+This pair takes care of mounting and unmounting filesystems. This can range from USB sticks to ISO images. Usually only root has mounting privileges.
+
+## Linux commands for text processing
+
+
+
