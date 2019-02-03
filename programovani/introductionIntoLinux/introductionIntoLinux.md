@@ -29,6 +29,9 @@ Linux borrows heavily from the well-established UNIX operating system. It was wr
 
 __Note__: Linux was inspired by UNIX, but it is not UNIX.
 
+<!-- break page -->
+<div style="page-break-after: always;"></div>
+
 ## Terminology
 **Kernel**: glue between hardware and applications. It controls the hardware and makes the hardware interact with the applications.
 
@@ -40,7 +43,9 @@ __Note__: Linux was inspired by UNIX, but it is not UNIX.
 
 **Filesystem**: method for storing and organizing files, some examples of filesystems are ext3, ext4 and FAT.
 
-**X Window system**: standard toolkit for build graphical subsystem on nearly all Linux systems (GNOME, KDE, Xfc)
+**X Window system**: standard toolkit for build graphical subsystem on nearly all Linux systems.
+
+**Desktop environment**: graphical user interface on top of the operating system (GNOME, KDE, Xfce)
 
 **Command line**: interface for typing commands on top of the operating system
 
@@ -57,6 +62,21 @@ Large organizations, such as companies and governmental institutions and other e
 
 CentOS is a popular free alternative to Red Hat Enterprise Linux (RHEL) and is often used by organizations that are comfortable operating without paid technical support. Ubuntu and Fedora are widely used by developers and are also popular in the educational realm. Scientific Linux is favored by the scientific research community for its compatibility with scientific and mathematical software packages. Both CentOS and Scientific Linux are binary-compatible with RHEL; i.e. in most cases, binary software packages will install properly across the distributions.
 
+### Base distributions
+* Debian (extends Ubuntu, Lubuntu)
+* Fedora
+* Suse
+
+### Questions to ask when choosing a distributions
+* What is the main function of the system (server or desktop)?
+* What types of packages are important to the organization? For example, web server, word processing, etc.
+* How much hard disk space is required and how much is available? For example, when installing Linux on an embedded device, space is usually constrained.
+* How often are packages updated?
+* How long is the support cycle for each release? For example, LTS releases have long-term support.
+* Do you need kernel customization from the vendor or a third party?
+* What hardware are you running on? For example, it might be X86, ARM, PPC, etc.
+* Do you need long-term stability? Can you accept (or need) a more volatile cutting edge system running the latest software?
+
 ## Boot process
 The Linux boot process is the procedure for initializing the system. It consists of everything that happens from when the computer power is first switched on until the user interface is fully operational. 
 
@@ -65,12 +85,15 @@ The Linux boot process is the procedure for initializing the system. It consists
 
 	* The BIOS software is stored on a ROM chip on the motherboard. After this, the remainder of the boot process is controlled by the operating system (OS).
 
-2. **Master Boot Record (MBR) and Boot Loader**
-	* Once the POST is completed, the system control passes from the BIOS to the boot loader. The boot loader is usually stored on one of the hard disks in the system, either in the boot sector (for traditional BIOS/MBR systems) or the EFI partition (for more recent (Unified) Extensible Firmware Interface or EFI/UEFI systems).
+1. **Master Boot Record (MBR) and Boot Loader**
+	* Master Boot Record Once the POST is completed, the system control passes from the BIOS to the boot loader. The boot loader is usually stored on one of the hard disks in the system, either in the boot sector (for traditional BIOS/MBR systems) or the EFI partition (for more recent (Unified) Extensible Firmware Interface or EFI/UEFI systems). For Linux exists many bootloaders as GRUB, ISOLINUX or DAS.
 
-	* A number of boot loaders exist for Linux; the most common ones are GRUB (for GRand Unified Boot loader), ISOLINUX (for booting from removable media), and DAS U-Boot (for booting on embedded devices/appliances). 
+1. **Load kernel**
+	* The boot loader loads the selected kernel image and passes control to it. Kernels are almost always compressed, so its first job is to uncompress itself. After this, it will check and analyze the system hardware and initialize any hardware device drivers built into the kernel.
 
-	* When booting Linux, the boot loader is responsible for loading the kernel image and the initial RAM disk or filesystem (which contains some critical files and device drivers needed to start the system) into memory.
+
+1. **Init RAM disk**
+	* The initramfs filesystem image contains programs and binary files that perform all actions needed to mount the proper root filesystem, like providing kernel functionality for the needed filesystem and device drivers.
 
 3. **Text mode login**
 	* Near the end of the boot process, init starts a number of text-mode login prompts. These enable you to type your username, followed by your password, and to eventually get a command shell. However, if you are running a system with a graphical login interface, you will not see these at first.
@@ -84,32 +107,46 @@ A filesystem is a method of storing/finding files on a hard disk (usually in a p
 
 Think of a refrigerator that has multiple shelves that can be used for storing various items. These shelves help you organize the grocery items by shape, size, type, etc. The same concept applies to a filesystem, which is the embodiment of a method of storing and organizing arbitrary collections of data in a human-usable form.
 
-Filesystems supported by Linux:
+**Filesystems supported by Linux:**
 
 * Conventional disk filesystems: ext2, ext3, ext4, XFS, Btrfs, JFS, NTFS, etc.
 * Flash storage filesystems: ubifs, JFFS2, YAFFS, etc.
 * Database filesystems
 * Special purpose filesystems: procfs, sysfs, tmpfs, squashfs, debugfs, etc.
 
-**The Filesystem Hierarchy Standard**
+### The Filesystem Hierarchy Standard
 
 Linux systems store their important files according to a standard layout called the Filesystem Hierarchy Standard (FHS), which has long been maintained by The Linux Foundation. Having a standard is designed to ensure that users, administrators, and developers can move between distributions without having to re-learn how the system is organized.
 
 Linux uses the ‘/’ character to separate paths (unlike Windows, which uses ‘\’), and does not have drive letters. Multiple drives and/or partitions are mounted as directories in the single filesystem.
 
+**Home**: each user has a home directory, usually placed under /home. Home directory contains some configuration files as .bash_profile for setting shell before login, .vimrc file for configure application Vim and etc.
+
+**Bin**: directory contains executable binaries, essential commands used to boot the system or in single-user mode, and essential commands required by all system users, such as: ps, ls, grep.
+
+**Sbin**: directory is intended for essential binaries related to system administration, such as fsck and shutdown.
+
+**Proc**: directory contains virtual files(files exist only in memory) viewing configuration information.It does not contain real files, but runtime system information (e.g. system memory, devices mounted, hardware configuration, etc). Some important files in /proc are: cpuinfo, interrupts, meminfo, mounts, partitions, version.
+
+**Dev**: directory contains device nodes, a type of pseudo-file used by most hardware devices, except for network devices.
+
+**Var**: directory contains files represent log files, database, print queues and temporary folder. Temporary folder is deleted after reboot system.
+
+**Etc**: directory is the home for system configuration files. It contains no binary programs, although there are some executable scripts. For example /etc/network, /etc/group or /etc/passwd.
+
+**Boot**: directory contains the few essential files needed to boot the system.
+
+**Lib** folder contains libraries (common code shared by applications and needed for them to run) for the essential programs in /bin and /sbin.
+
+**Media**: directory is compose from removable devices as USB disks, CDs or DVDs.
+
+**Usr**: directory tree contains theoretically non-essential programs and scripts added to system by users.
+
+**Tmp**: temporary files; on some distributions erased across a reboot and/or may actually be a ramdisk in memory.
+
 <div align="center">
 	<img src="images/dirtree.jpg" width="70%"/>
 </div>
-
-## Questions to ask when choosing a distributions
-* What is the main function of the system (server or desktop)?
-* What types of packages are important to the organization? For example, web server, word processing, etc.
-* How much hard disk space is required and how much is available? For example, when installing Linux on an embedded device, space is usually constrained.
-* How often are packages updated?
-* How long is the support cycle for each release? For example, LTS releases have long-term support.
-* Do you need kernel customization from the vendor or a third party?
-* What hardware are you running on? For example, it might be X86, ARM, PPC, etc.
-* Do you need long-term stability? Can you accept (or need) a more volatile cutting edge system running the latest software?
 
 ## Terminal
 Linux system administrators spend a significant amount of their time at a command line prompt. They often automate and troubleshoot tasks in this text environment. There is a saying, "graphical user interfaces make easy tasks easier, while command line interfaces make difficult tasks possible". Linux relies heavily on the abundance of command line tools. 
@@ -147,43 +184,153 @@ To switch between VTs, press CTRL-ALT-function key for the VT. For example, pres
 
 The user with administrative (admin) privileges when required. sudo allows users to run programs using the security privileges of another user, generally root (superuser). The functionality of sudo is similar to that of run as in Windows.
 
-## Commands for file system management
+## Linux commands for file system management
 
 ### ls
 By default, list the contents of the current directory. If you provide it a path, it will list the contents of that. Useful options to know are -l and -a, a long list format with more information and show hidden (dot) files, respectively.
 
+```
+ls -a			# list all files including hidden file starting with '.'
+ls -d 			# list directories - with ' */'
+ls -l			# list with long format - show permissions
+ls -la			# list long format including hidden files
+ls -lh			# list long format with readable file size
+
+ls --colored	# colored list [=always/never/auto]
+ls -R			# list recursively directory tree
+ls -S			# sort by file size
+ls -t			# sort by time & date
+ls -X			# sort by extension name
+```
+
 ### cat
 If given a single file, prints its contents to the standard output. If you give it more than one file, it will concatenate them, and you can then redirect the output into a new file. Potentially useful is the -n option, which numbers the lines.
+
+```
+cat file.txt			# display contents of file
+cat file1 file2			# view contents of multiple files in terminal
+cat file.txt | less		# display contents of file gradually
+cat > myFile.txt		# create a file with cat command
+cat -n file.txt			# display line numbers in file
+
+cat -T file.txt			# display tab separated lines in file
+cat file1 > file2		# write content of file1 into file2
+cat file1 >> file2		# appends content of file1 at end of file2
+cat file1 file2 > file3	# redirecting multiple files contain in a single file
+cat file1 file2 | sort > file3	# sorting contents of multiple files in a single file
+```
 
 ### cd
 Allows you to go from current directory to specified directory. Calling it without arguments returns you to your home directory. Calling it with two dots (cd ..) returns you to a directory “above” the current one, while calling it with a dash (cd -) returns you to the previous directory, regardless of where it’s located relative to the current one.
 
-### pdw
+```
+cd Documents				# change destination into directory Documents defined by relative path
+cd home/user01/Documents	# change destination into directory Documents defined by absolute path 
+cd ~ 						# change destination into user home directory
+cd /						# change destination into root directory
+```
+
+### pwd
 Prints your current directory. Useful if your prompt doesn’t contain this information, and especially useful in BASH programming for obtaining a reference to the directory in which you’re executing the code.
+
+```
+pwd		# print your current working directory
+pwd -L	# print working directory from environment even if it contains symlinks
+pwd -I	# print actual physical current working directory by resolving all symbolic links.
+```
 
 ### mkdir
 Create new directories. The most handy switch is -p, which creates the entire specified structure if it doesn’t exist already.
 
+```
+mkdir dogs					# create directory with name dogs in current directory
+mkdir -p dir1/dir2/dir3		# parent directories (if non-existent) are created
+```
+
+
 ### file
 Tells you the type of a file. Since files in Linux aren’t under obligation to have extensions for the system to work (not that having extensions always helps), sometimes it’s hard for the user to know what type of file something is, and this little utility solves that problem.
+
+```
+file notes.txt				# determine file type
+file note1.txt note2.txt	# determine type of multiple files
+```
 
 ### cp
 Copies files and directories. Since it doesn’t copy directories recursively by default, remember to use -r or -a. The latter preserves mode, ownership and time stamp info in addition to recursively copying.
 
+```
+cp main.c bak						# copy single file main.c to destination directory bak
+cp main.c def.h /home/usr/rapid/	# copy 2 files main.c and def.h to directory rapid
+cp *.c bak							# copy all C files in current directory to subdirectory bak
+cp src /home/usr/rapid/				# copy directory src to directory rapid
+cp -R dev bak						# copy all files and directories in dev recursively to directory bak
+cp -f test.c bak					# force file copy
+```
+
 ### mv
 Moves or renames files and directories. Essentially, moving and renaming is one operation – renaming is just “moving” a single file to the same place under a different name.
 
+```
+mv names.txt fullnames.txt			# rename file name.txt onto fullnames.txt
+mv -i names.txt fullnames.txt		# rename file, but prompts before overwriting
+mv -n names.txt fullnames.txt		# rename file, but not overwrite an existing file
+```
+
 ### rm
-Delete files and directories. Certainly a very useful command to know, as you cannot remove clutter without it. However, beware when using it. Although nowadays you’d really have to work on it to cause some damage to the system, you can still damage yourself – rm doesn’t remove files to some imaginary wastebasket from which you can fish them out later when you realize you’ve made a horrible mistake, and “rm ate my homework” isn’t going to convince anyone. Deleting directories requires recursive operation, so once again we have the -r switch.
+Stands for ‘remove‘ as the name suggests rm command is used to delete or remove files and directory in UNIX like operating system. If you are new to Linux then you should be very careful while running rm command because once you delete the files then you can not recover the contents of files and directory. Though there are some tools and commands through which deleted files can be recovered but for that you need expert skills.
+
+```
+rm linuxstufff.log		# delete the file
+rm -i notes.txt			# delete files interactively
+rm -d appdata/			# delete a empty directory
+rm -r dbstore/			# deleting a directory recursively
+rm -ri dbstore/			# delete the files and sub-directories interactively
+rm -f tech.txt 			# deleting files forcefully
+rm -f log{1..5}.txt		# delete files by reqular expression
+rm -rf dbstore/			# deleting a directory recursively and forcefully
+```
 
 ### ln
-Creates hard or symbolic links between files. Symbolic or soft links are sort of like Windows shortcuts, they provide a convenient way of accessing a particular file, though the analogy doesn’t quite hold – symlinks can point to anything, but do not feature any metadata. You aren’t very likely to ever use hard links, but knowing they’re aliases to files – as opposed to symlinks, which are aliases to file names – can’t hurt.
+Creates hard or symbolic links between files. 
+
+__Soft Link__:
+Linux OS recognizes the data part of this special file as a reference to another file path. The data in the original file can be accessed through the special file, which is called as Soft Link.
+
+__Hard Link__:
+With Hard Link, more than one file name reference the same inode number. Once you create a directory, you would see the hidden directories “.” and “..” . In this, “.” directory is hard linked to the current directory and the “..” is hard linked to the parent directory.
+
+```
+ln -s /home/chris/src/library.so library.so		# create a symbolic link for a File
+ln -s /home/chris/obj objects					# create a symbolic link for a directory
+ln src_original.txt dst_link.txt				# create hard link for files
+```
+
 
 ### chmod
-Change user permissions. This refers to viewing, writing and executing files. A normal user may change permissions for files he owns.
+Change user permissions. This refers to viewing, writing and executing files. A normal user may change permissions for files he owns. Permissions are defined in order "user", "group", and "other".
+
+*	4 stands for "read",
+*	2 stands for "write",
+* 	1 stands for "execute"
+*	0 stands for "no permission."
+
+```
+chmod 754 myfile		# set permission on myFile
+```
+
+__Note__: Here the digits 7, 5, and 4 each individually represent the permissions for the user, group, and others, each digit is a combination of the numbers 4, 2, 1, and 0.
+
 
 ### chown
-Change file ownership. Only the root user may change the owner of a file. To recursively change the owner for all the files in a directory, use it with -R.
+The concept of owner and groups for files is fundamental to Linux. Every file is associated with an owner and a group. You can use chown and chgrp commands to change the owner or the group of a particular file or directory.
+
+```
+chown root tmpfile					# change the owner of a file
+chown :friends tmpfile				# change the group of a file
+chown himanshu:friends tmpfile		# change both owner and the group
+```
+
 
 ### find
 Search the filesystem for files or directories. Find is a very versatile and powerful command, not only because of its searching capabilities, but also because it allows you to execute arbitrary commands on matching (or non-matching, even) files.
@@ -223,8 +370,135 @@ The command line word counting utility. And line counting. And byte counting. An
 ### diff
 Shows the difference between two files via line by line comparison. It only shows altered lines, abbreviating changed as c, deleted as d and added as a.
 
+## Linux commands for process management
 
-### 
+### kill / xkill / pkill / killall
+All of these serve to “kill” a process, ie terminate it. The difference is what they accept as input. Kill wants the process ID, xkill allows you to click a window to close it, while killall and pkill accept the name of a process, but have somewhat different options and subtly different behavior. Note these do not belong to the same package, and xkill especially is not likely to be installed by default. We advise you to rectify that for your own convenience.
+
+### ps / pgrep
+As mentioned, kill needs the process ID. One way to obtain this is by using ps, which prints information about the currently active processes. The default output is not hugely useful, so stick an -e there to see information about every process on the system. This is only a snapshot, it will not update, see top for that. The pgrep command works in the following manner: you give it a process name, it gives you the process ID. Partial matches count, so be careful.
+
+### top / htop
+These two are similar, both display processes, and can be thought of as console system monitors. We recommend you install htop the first chance you get if your distribution doesn’t ship it by default, as it’s a much improved version of top. For starters, it’s not merely a viewer – it allows you to control processes via its user-friendly console GUI interface.
+
+### time
+Time a process. Think of it as a stopwatch for program execution. Useful if you’re curious how much slower is your homework implementation of a sorting algorithm compared to the built-in one. Contrary to what you might expect based on the name, it doesn’t tell you the time. See date for that.
+
+## Linux commands for BASH and user environment
+
+### su / sudo
+Su and sudo are two ways of accomplishing the same thing – running a command as another user. Depending on what your distribution is, you’ve likely seen only one or the other, but both are serviceable. The difference is that su switches you to a different user, while sudo only runs the command with another user’s privileges.
+
+### date
+Unlike time, date does exactly what you’d expect it – it prints out the date (and time) to the standard output. The output itself can be formatted to your specification, and it takes everything from the usual stuff like year, month, day,
+12 or 24 hour format to nanoseconds and the ISO week number. For example, date +”%j %V” would give you the day of the year followed by the ISO week number.
+
+### alias
+This commands creates or changes aliases to other commands. What this means is, you can give names to new commands (or groupings of commands) or “rename” existing ones. It’s very handy for abbreviating long strings of commands you find yourself using often, or giving more memorable names to things you don’t use that often and have problems memorizing.
+
+### uname
+Outputs some basic system information. By itself, it won’t give you anything very useful (“Linux”), but call it with -a, and it will provide kernel information, as well as tell you the hostname and processor architecture.
+
+### uptime
+
+Tells you how long has the system been running. Not exactly essential information, but good for bragging rights and the occasional compute-things-relative-to-how-long-I’ve-been-at-the-computer situation.
+
+### sleep
+
+You might be wondering why or how would this ever be useful, but even outside BASH scripts, it has its uses: for example, if you’d like to shutdown the computer after a certain period of time, or even as a makeshift alarm.
+
+## Linux commands for user management
+
+### useradd, userdel, usermod
+These commands allow you do add, delete and modify user accounts. It’s not very likely you’ll be using these often, especially if you’re the sole user of your system, and even if not, you might opt for doing this via a GUI, but it’s good to know what they do and that they’re there in case you suddenly need them.
+
+### passwd
+This command enables you to change your user account password. As root, you can reset normal user passwords, though you cannot view them. It’s a good security practice to change your password every so often.
+
+## Linux commands for help / documentation
+
+### man / whatis
+The man command brings up the manual for a particular command. Most command line applications come with a man page. Whatis provides a one line summary lifted from the relevant sections of the manual. What are sections of the manual? See for yourself with “man man”.
+
+### whereis
+Tells you where an executable binary files lives, provided it’s in your path. It can also find its manual page and source code, provided they are present.
+
+## Linux commands for network
+
+### ip
+If the list of network related commands seems awfully short, you’re probably not acquainted with ip. In short, the net-utils package which contains ipconfig, netstat and others has been deprecated in favor of the iproute2 package. It provides the ip command, which replaces ipconfig, netstat, route, etc. You could view it as a Swiss Army knife of networking, or a unwanted mess, but either way, it’s the future.
+
+### ping
+Pings are ICMP ECHO_REQUEST datagrams, but that’s not important. The important thing is that the ping utility is a useful diagnostic tool. It allows you to quickly test if you’re connected to your router or the Internet, and gives some indication of the quality of that connection.
+
+### wget
+Wget is a command line utility that can capably handle the following types of downloads: Large file downloads, Recursive downloads, where a web page refers to other web pages and all are downloaded at once, Password-required downloads or Multiple file downloads.
+
+### curl
+Besides downloading, you may want to obtain information about a URL, such as the source code being used. curl can be used from the command line or a script to read such information. curl also allows you to save the contents of a web page to a file, as does wget.
+
+### traceroute
+Print the route packets take to network host. The Internet is a large and complex aggregation of network hardware, connected together by gateways.  Tracking the route one's packets follow (or finding the miscreant gateway that's discarding your packets) can be difficult.  traceroute utilizes the IP protocol `time to live' field and attempts to elicit an ICMP TIME_EXCEEDED response from each gateway along
+the path to some host. The only mandatory parameter is the destination host name or IP number.
+
+## Package management system
+The core parts of a Linux distribution and most of its add-on software are installed via the Package Management System. Each package contains the files and other instructions needed to make one software component work on the system. Packages can depend on each other. For example, a package for a web-based application written in PHP can depend on the PHP package.
+
+In most Linux distributions have two levels of package management system. Low-level tool (such as dpkg or rpm) takes care of the details of unpacking individual packages, running scripts, getting the software installed correctly, while a high-level tool (such as apt-get, yum, or zypper) works with groups of packages, downloads packages from the vendor, and figures out dependencies. Most of the time users need work only with the high-level tool, which will take care of calling the low-level tool as needed.
+
+
+**apt**
+
+Advanced packaging tool is the package management system that manages software on Debian-based systems.
+
+```
+apt-cache search python     # search available programs with substring python
+apt-get install python      # install program python
+apt-get remove python       # uninstall program python
+apt-get list				# show installed packages on your system
+apt-get update              # update your repository with reference on software
+apt-get upgrade				# upgrade operation system onto new version
+```
+**yum**
+
+Yellowdog Updater Modified is the package management system used for RPM compatible Linux as Fedora.
+
+```
+yum search python       # search available programs with substring python
+yum install python      # install program python
+yum remove python       # uninstall program python
+yum list				# show installed packages on your system
+yum update              # update your repository with reference on software
+```
+
+**zypper**
+
+Zypper is the package management system used for openSUSE distributions.
+
+```
+zypper search python       # search available programs with substring python
+zypper install python      # install program python
+zypper remove python       # uninstall program python
+zypper list				   # show installed packages on your system
+zypper update              # update your repository with reference on software
+```
+
+## Streams
+TO-DO
+
+## Process
+TO-DO
+
+## Text editor
+TO-DO
+
+## User environment
+TO-DO
+
+
+
+
+
 
 
 
