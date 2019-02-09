@@ -335,20 +335,59 @@ chown himanshu:friends tmpfile		# change both owner and the group
 ### find
 Search the filesystem for files or directories. Find is a very versatile and powerful command, not only because of its searching capabilities, but also because it allows you to execute arbitrary commands on matching (or non-matching, even) files.
 
+```
+find . -name file.txt			# find files using name in current directory
+find /home -name tecmint.txt	# Find Files Under Home Directory
+find /home -iname tecmint.txt	# Find Files Using Name and Ignoring Case
+find / -type d -name Tecmint	# Find Directories Using Name
+find . -type f -name "*.php"	# Find all PHP Files in Directory
+```
+
+
 ### locate
 Unlike find, locate searches the updatedb database for file name patterns. This database contains a snapshot of the filesystem. This makes locate very fast, but also unreliable – it cannot tell whether anything changed since the last snapshot.
+
+```
+locale file.txt			# find file in precomputed database files
+locale -i "file.txt"	# find file by ignore case sensitive in precomputer database
+locale "*.html" -n 20	# find just 20 result from your query
+locale "*.html" -c		# display the number of matching entries
+```
 
 ### du
 Show file or directory size. Among the more useful options are -h, which converts the reported sizes into a more human-friendly format, -s which gives only a summary instead of the whole listing, and -d which controls the depth of directory recursion.
 
+```
+du -sh file.txt	# displays disk usage file.txt with human readable values (KB, MB, GB) 
+du -ah			# displays disk usage of all files and folder in current directory
+du -cah 		# displays disk usage of all files and folder in current directory with grand total disk space at the last line
+```
+
 ### df
 Show disk usage. The default output is good enough – it lists every filesystem, reports its size and the amount of used and available space – but you might want to tack on -h, which once again provides a more human-friendly report.
 
+```
+df -h 	# displays disk usage on all mounted volumes with human readable values (KB, MB, GB)
+```
+
 ### dd
-Convert and copy a file, according to its manpage. Not exactly the clearest or most useful description around, and yet, that’s all dd does. You give it a source and a destination, and optionally some other commands, and it copies from one to the other. Its power comes from the flexibility – you can tell it the exact block size, it can copy around corrupted data, and it isn’t picky about devices – if you want to overwrite your hard drive with zeroes straight from /dev/zero, you’re welcome to do it. It’s also commonly used for creating live USB sticks from hybrid ISO images.
+The dd command copies a file, converting the format of the data in the process, according to the operands specified. Its power comes from the flexibility – you can tell it the exact block size, it can copy around corrupted data, and it isn’t picky about devices – if you want to overwrite your hard drive with zeroes straight from /dev/zero, you’re welcome to do it. It’s also commonly used for creating live USB sticks from hybrid ISO images.
+
+```
+dd if=/dev/sda of=~/disk1.img		# Create a ISO disc image from the CD in the computer
+dd if=/dev/sda of=~/disk1.img		# Create an img file of the /dev/sda hard drive
+dd if=disk1.img of=/dev/sda			# Restore backup image onto hard drive sda
+dd if=/dev/zero of=/dev/sdX bs=1M	# securely erase a hard drive with zeroes
+```
+
 
 ### mount / unmount
 This pair takes care of mounting and unmounting filesystems. This can range from USB sticks to ISO images. Usually only root has mounting privileges.
+
+```
+mount /dev/sda5 /home/xp 		#	mount sda5 drive on directory xp
+umount /home/xp		          #	unmount drive sda5 from directory xp
+```
 
 ## Linux commands for text processing
 
