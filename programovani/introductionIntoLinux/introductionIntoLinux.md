@@ -394,34 +394,108 @@ umount /home/xp		          #	unmount drive sda5 from directory xp
 ### more and less
 These two similar utilities allow you to view text chunked into screenfuls. Imagine a very long output from some command. Perhaps you called cat on a file and your terminal emulator took a few seconds to scroll all the text. Well, if you pipe it into one of these, you can now scroll it at your leisure. Less is newer and offers more options, so there is no reason to use more.
 
+```
+more file.txt			# sequentially read the content of file on the screen
+cat file.txt | more 	# sequentially read the content of file on the screen
+less file.txt			# sequentially read the content of file on the screen
+cat file.txt | less 	# sequentially read the content of file on the screen
+```	
+
 ### head and tail
 Another pair, but here both halves have their uses. Head outputs a number of the first (“head”) lines of a file, while tail outputs a number of last (“tail”) lines of a file. The default number is ten, but this can be controlled via the -n option. Another useful switch is -f, which is short for “follow”, which continually outputs any appended lines – so, for instance, if you wanted to monitor a log file instead of constantly opening and closing it, you could use “tail -f /path/to/logfile”.
+
+```	
+head flavours.txt		# view the first 10 number of lines from given file
+head -n 5 flavours.txt 	# view the first N number of lines from given file
+head -5 flavours.txt 	# view the first N number of lines from given file
+
+tail flavours.txt		# view the last 10 number of lines from given file
+tail -n 5 flavours.txt	# view the last N number of lines from given file
+tail -5 flavours.txt	# view the last N number of lines from given file
+tail -f perf.log		# view appended lines of file instantly
+```	
 
 ### grep
 Grep, like all good Unix tools, does one thing, but does it well. It searches text for patterns. By default it looks at standard input, but you can specify files to be searched. A pattern can be a normal string or a regular expression. It can print out matching or non-matching lines, and their context. Every time you run a command which spews a lot of information you don’t need, pipe it into grep and let it do its magic.
 
+```	
+grep "this" demo_file			# Search for the given string in a single file
+grep "string" FILE_PATTERN		# Checking for the given string in multiple files
+grep -i "string" FILE			# Case insensitive search in file
+grep -v "string" demo_file		# search lines in file does not contains given string
+grep -A 3 -i "ex" demo_file		# display N lines after match
+grep -B 3 -i "ex" demo_file		# display N lines before match
+grep -C 3 -i "ex" demo_file		# display N lines aroung match
+
+# Match regular expression in files
+grep "lines.*empty" demo_file
+
+# highlighting result of search
+export GREP_OPTIONS='--color=auto' GREP_COLOR='100;8'
+```	
+
 ### sort
 Sorts lines of text by various criteria. Among the more useful, there’s -n, which sorts by the numeric value of a string, and -r, which reverses the output. An example of where this might come in handy is sorting du output – for example, if you wanted to see the files sorted in descending order according to size, you’d combine the two options.
+
+```	
+sort file.txt		# display sort the lines in this file alphabetically
+sort -r file.txt	# display sort the lines in file revese order alphabetically
+sort -n file.txt	# display sort the lines in this file numerically
+sort -rn file.txt	# display sort the lines in this file reverse order numerically
+```	
 
 ### wc
 The command line word counting utility. And line counting. And byte counting. And character counting.
 
+```	
+wc -l file.txt		# print the newline counts in the file
+wc -w file.txt		# print the word counts in the file
+wc -m file.txt		# print the character counts in the file
+```	
+
+
 ### diff
 Shows the difference between two files via line by line comparison. It only shows altered lines, abbreviating changed as c, deleted as d and added as a.
+
+```	
+diff file1 file2		# show difference between file1 and file2 line by line
+```	
 
 ## Linux commands for process management
 
 ### kill / xkill / pkill / killall
 All of these serve to “kill” a process, ie terminate it. The difference is what they accept as input. Kill wants the process ID, xkill allows you to click a window to close it, while killall and pkill accept the name of a process, but have somewhat different options and subtly different behavior. Note these do not belong to the same package, and xkill especially is not likely to be installed by default. We advise you to rectify that for your own convenience.
 
+```	
+kill 257					# kill process with PID (Process ID) 257
+kill 1212 1313 1414		# kill multiple process
+kill --TERM -257			# kill process with PID 257 and all child processes
+```	
+
+
 ### ps / pgrep
 As mentioned, kill needs the process ID. One way to obtain this is by using ps, which prints information about the currently active processes. The default output is not hugely useful, so stick an -e there to see information about every process on the system. This is only a snapshot, it will not update, see top for that. The pgrep command works in the following manner: you give it a process name, it gives you the process ID. Partial matches count, so be careful.
+
+```	
+pgrep firefox					# find PID for process named firefox
+ps aux | grep [f]irefox		# find PID for process named firefox
+```	
 
 ### top / htop
 These two are similar, both display processes, and can be thought of as console system monitors. We recommend you install htop the first chance you get if your distribution doesn’t ship it by default, as it’s a much improved version of top. For starters, it’s not merely a viewer – it allows you to control processes via its user-friendly console GUI interface.
 
+```	
+top		# display and update sorted information about processes
+htop	# better formated top command
+```	
+
 ### time
 Time a process. Think of it as a stopwatch for program execution. Useful if you’re curious how much slower is your homework implementation of a sorting algorithm compared to the built-in one. Contrary to what you might expect based on the name, it doesn’t tell you the time. See date for that.
+
+```	
+time sort.py input.txt	# display total time execution program
+```	
+
 
 ## Linux commands for BASH and user environment
 
