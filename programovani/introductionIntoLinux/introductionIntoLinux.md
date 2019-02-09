@@ -1,12 +1,39 @@
 # Introduction into Linux
 
-## What is it?
+Table of contents
+=================
+
+<!--ts-->
+   * [What is Linux?](#whatIsIt)
+   * [History](#history)
+   * [Philosophy](#philosophy)
+   * [Terminology](#terminology)
+   * [Distributions](#distributions)
+   * [Boot process](#bootProcess)
+   * [Linux filesystems](#linuxFilesystems)
+   * [Terminal](#terminal)
+	* [Linux commands for file system management](#linuxCommandsForFileSystemManagement)
+   	* [Linux commands for text processing](#linuxCommandsForTextProcessing)
+   	* [Linux commands for process management](#linuxCommandsForProcessManagement)
+   	* [Linux commands for BASH and user environment ](#linuxCommandsForBASH)
+   	* [Linux commands for help / documentation](#linuxCommandsForDocumentation)
+   	* [Linux commands for network](#linuxCommandsForNetwork)
+  * [Package management system](#packageManagementSystem)
+  * [Streams](#streams)
+  * [Process](#process)
+  * [Text editors](#textEditors)
+  * [User environment](#userEnvironment)
+<!--te-->
+
+<a name=whatIsIt></a>
+## What is Linux?
 Linux is an open source computer operating system, initially developed on and for Intel x86-based personal computers. It has been subsequently ported to an astoundingly long list of other hardware platforms, from tiny embedded appliances to the world's largest supercomputers.
 
 <div align="center">
 	<img src="images/linuxLogo.jpg">
 </div>
 
+<a name=history></a>
 ## History
 Linus Torvalds was a student in Helsinki, Finland, in 1991, when he started a project: writing his own operating system kernel. He also collected together and/or developed the other essential ingredients required to construct an entire operating system with his kernel at the center. It wasn't long before this became known as the Linux kernel. 
 
@@ -22,6 +49,7 @@ Linus named his OS kernel Linux and shows a penguin as it mascot after a little 
 	<img src="images/LFS01_ch02_sectiom_01_screen05.jpg"/>
 </div>
 
+<a name="philosophy"></a>
 ## Philosophy
 Linux is constantly enhanced and maintained by a network of developers from all over the world collaborating over the Internet, with Linus Torvalds at the head. Technical skill, a desire to contribute, and the ability to collaborate with others are the only qualifications for participating.
 
@@ -32,6 +60,7 @@ __Note__: Linux was inspired by UNIX, but it is not UNIX.
 <!-- break page -->
 <div style="page-break-after: always;"></div>
 
+<a name="terminology"></a>
 ## Terminology
 **Kernel**: glue between hardware and applications. It controls the hardware and makes the hardware interact with the applications.
 
@@ -51,6 +80,7 @@ __Note__: Linux was inspired by UNIX, but it is not UNIX.
 
 **Shell**: command line interpreter that interprets the command line input and instruct the operating system to perform any necessary tasks and commands.
 
+<a name="distributions"></a>
 ## Distributions
 The Linux kernel is the core of the operating system. A full Linux distribution consists of the kernel plus a number of other software tools for file-related operations, user management, and software package management. 
 
@@ -77,6 +107,7 @@ CentOS is a popular free alternative to Red Hat Enterprise Linux (RHEL) and is o
 * What hardware are you running on? For example, it might be X86, ARM, PPC, etc.
 * Do you need long-term stability? Can you accept (or need) a more volatile cutting edge system running the latest software?
 
+<a name="bootProcess"></a>
 ## Boot process
 The Linux boot process is the procedure for initializing the system. It consists of everything that happens from when the computer power is first switched on until the user interface is fully operational. 
 
@@ -102,6 +133,7 @@ The Linux boot process is the procedure for initializing the system. It consists
 	<img src="images/linuxKernel.jpg"/>
 </div>
 
+<a name="linuxFilesystems"></a>
 ## Linux filesystems
 A filesystem is a method of storing/finding files on a hard disk (usually in a partition). 
 
@@ -148,6 +180,7 @@ Linux uses the ‘/’ character to separate paths (unlike Windows, which uses �
 	<img src="images/dirtree.jpg" width="70%"/>
 </div>
 
+<a name="terminal"></a>
 ## Terminal
 Linux system administrators spend a significant amount of their time at a command line prompt. They often automate and troubleshoot tasks in this text environment. There is a saying, "graphical user interfaces make easy tasks easier, while command line interfaces make difficult tasks possible". Linux relies heavily on the abundance of command line tools. 
 
@@ -184,6 +217,7 @@ To switch between VTs, press CTRL-ALT-function key for the VT. For example, pres
 
 The user with administrative (admin) privileges when required. sudo allows users to run programs using the security privileges of another user, generally root (superuser). The functionality of sudo is similar to that of run as in Windows.
 
+<a name="linuxCommandsForFileSystemManagement"></a>
 ## Linux commands for file system management
 
 ### ls
@@ -389,6 +423,7 @@ mount /dev/sda5 /home/xp 		#	mount sda5 drive on directory xp
 umount /home/xp		          #	unmount drive sda5 from directory xp
 ```
 
+<a name="linuxCommandsForTextProcessing"></a>
 ## Linux commands for text processing
 
 ### more and less
@@ -461,6 +496,7 @@ Shows the difference between two files via line by line comparison. It only show
 diff file1 file2		# show difference between file1 and file2 line by line
 ```	
 
+<a name=linuxCommandsForProcessManagement></a>
 ## Linux commands for process management
 
 ### kill / xkill / pkill / killall
@@ -496,7 +532,7 @@ Time a process. Think of it as a stopwatch for program execution. Useful if you�
 time sort.py input.txt	# display total time execution program
 ```	
 
-
+<a name="linuxCommandsForBASH"></a>
 ## Linux commands for BASH and user environment
 
 ### su / sudo
@@ -528,6 +564,7 @@ These commands allow you do add, delete and modify user accounts. It’s not ver
 ### passwd
 This command enables you to change your user account password. As root, you can reset normal user passwords, though you cannot view them. It’s a good security practice to change your password every so often.
 
+<a name="linuxCommandsForDocumentation"></a>
 ## Linux commands for help / documentation
 
 ### man / whatis
@@ -536,6 +573,7 @@ The man command brings up the manual for a particular command. Most command line
 ### whereis
 Tells you where an executable binary files lives, provided it’s in your path. It can also find its manual page and source code, provided they are present.
 
+<a name="linuxCommandsForNetwork"></a>
 ## Linux commands for network
 
 ### ip
@@ -554,6 +592,7 @@ Besides downloading, you may want to obtain information about a URL, such as the
 Print the route packets take to network host. The Internet is a large and complex aggregation of network hardware, connected together by gateways.  Tracking the route one's packets follow (or finding the miscreant gateway that's discarding your packets) can be difficult.  traceroute utilizes the IP protocol `time to live' field and attempts to elicit an ICMP TIME_EXCEEDED response from each gateway along
 the path to some host. The only mandatory parameter is the destination host name or IP number.
 
+<a name="packageManagementSystem"></a>
 ## Package management system
 The core parts of a Linux distribution and most of its add-on software are installed via the Package Management System. Each package contains the files and other instructions needed to make one software component work on the system. Packages can depend on each other. For example, a package for a web-based application written in PHP can depend on the PHP package.
 
@@ -596,15 +635,19 @@ zypper list				   # show installed packages on your system
 zypper update              # update your repository with reference on software
 ```
 
+<a name="streams"></a>
 ## Streams
 TO-DO
 
+<a name="process"></a>
 ## Process
 TO-DO
 
-## Text editor
+<a name="textEditors"></a>
+## Text editors
 TO-DO
 
+<a name="userEnvironment"></a>
 ## User environment
 TO-DO
 
