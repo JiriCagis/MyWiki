@@ -1,12 +1,39 @@
 # Introduction into Linux
 
-## What is it?
+Table of contents
+=================
+
+<!--ts-->
+   * [What is Linux?](#whatIsIt)
+   * [History](#history)
+   * [Philosophy](#philosophy)
+   * [Terminology](#terminology)
+   * [Distributions](#distributions)
+   * [Boot process](#bootProcess)
+   * [Linux filesystems](#linuxFilesystems)
+   * [Terminal](#terminal)
+     * [Linux commands for file system management](#linuxCommandsForFileSystemManagement)
+     * [Linux commands for text processing](#linuxCommandsForTextProcessing)
+     * [Linux commands for process management](#linuxCommandsForProcessManagement)
+     * [Linux commands for BASH and user environment ](#linuxCommandsForBASH)
+     * [Linux commands for help / documentation](#linuxCommandsForDocumentation)
+     * [Linux commands for network](#linuxCommandsForNetwork)
+  * [Package management system](#packageManagementSystem)
+  * [Streams](#streams)
+  * [Process](#process)
+  * [Text editors](#textEditors)
+  * [User environment](#userEnvironment)
+<!--te-->
+
+<a name=whatIsIt></a>
+## What is Linux?
 Linux is an open source computer operating system, initially developed on and for Intel x86-based personal computers. It has been subsequently ported to an astoundingly long list of other hardware platforms, from tiny embedded appliances to the world's largest supercomputers.
 
 <div align="center">
 	<img src="images/linuxLogo.jpg">
 </div>
 
+<a name=history></a>
 ## History
 Linus Torvalds was a student in Helsinki, Finland, in 1991, when he started a project: writing his own operating system kernel. He also collected together and/or developed the other essential ingredients required to construct an entire operating system with his kernel at the center. It wasn't long before this became known as the Linux kernel. 
 
@@ -22,6 +49,7 @@ Linus named his OS kernel Linux and shows a penguin as it mascot after a little 
 	<img src="images/LFS01_ch02_sectiom_01_screen05.jpg"/>
 </div>
 
+<a name="philosophy"></a>
 ## Philosophy
 Linux is constantly enhanced and maintained by a network of developers from all over the world collaborating over the Internet, with Linus Torvalds at the head. Technical skill, a desire to contribute, and the ability to collaborate with others are the only qualifications for participating.
 
@@ -32,6 +60,7 @@ __Note__: Linux was inspired by UNIX, but it is not UNIX.
 <!-- break page -->
 <div style="page-break-after: always;"></div>
 
+<a name="terminology"></a>
 ## Terminology
 **Kernel**: glue between hardware and applications. It controls the hardware and makes the hardware interact with the applications.
 
@@ -51,6 +80,7 @@ __Note__: Linux was inspired by UNIX, but it is not UNIX.
 
 **Shell**: command line interpreter that interprets the command line input and instruct the operating system to perform any necessary tasks and commands.
 
+<a name="distributions"></a>
 ## Distributions
 The Linux kernel is the core of the operating system. A full Linux distribution consists of the kernel plus a number of other software tools for file-related operations, user management, and software package management. 
 
@@ -77,6 +107,7 @@ CentOS is a popular free alternative to Red Hat Enterprise Linux (RHEL) and is o
 * What hardware are you running on? For example, it might be X86, ARM, PPC, etc.
 * Do you need long-term stability? Can you accept (or need) a more volatile cutting edge system running the latest software?
 
+<a name="bootProcess"></a>
 ## Boot process
 The Linux boot process is the procedure for initializing the system. It consists of everything that happens from when the computer power is first switched on until the user interface is fully operational. 
 
@@ -102,6 +133,7 @@ The Linux boot process is the procedure for initializing the system. It consists
 	<img src="images/linuxKernel.jpg"/>
 </div>
 
+<a name="linuxFilesystems"></a>
 ## Linux filesystems
 A filesystem is a method of storing/finding files on a hard disk (usually in a partition). 
 
@@ -148,6 +180,7 @@ Linux uses the ‘/’ character to separate paths (unlike Windows, which uses �
 	<img src="images/dirtree.jpg" width="70%"/>
 </div>
 
+<a name="terminal"></a>
 ## Terminal
 Linux system administrators spend a significant amount of their time at a command line prompt. They often automate and troubleshoot tasks in this text environment. There is a saying, "graphical user interfaces make easy tasks easier, while command line interfaces make difficult tasks possible". Linux relies heavily on the abundance of command line tools. 
 
@@ -184,6 +217,7 @@ To switch between VTs, press CTRL-ALT-function key for the VT. For example, pres
 
 The user with administrative (admin) privileges when required. sudo allows users to run programs using the security privileges of another user, generally root (superuser). The functionality of sudo is similar to that of run as in Windows.
 
+<a name="linuxCommandsForFileSystemManagement"></a>
 ## Linux commands for file system management
 
 ### ls
@@ -196,7 +230,7 @@ ls -l			# list with long format - show permissions
 ls -la			# list long format including hidden files
 ls -lh			# list long format with readable file size
 
-ls --colored	# colored list [=always/never/auto]
+ls --colored		# colored list [=always/never/auto]
 ls -R			# list recursively directory tree
 ls -S			# sort by file size
 ls -t			# sort by time & date
@@ -216,7 +250,7 @@ cat -n file.txt			# display line numbers in file
 cat -T file.txt			# display tab separated lines in file
 cat file1 > file2		# write content of file1 into file2
 cat file1 >> file2		# appends content of file1 at end of file2
-cat file1 file2 > file3	# redirecting multiple files contain in a single file
+cat file1 file2 > file3		# redirecting multiple files contain in a single file
 cat file1 file2 | sort > file3	# sorting contents of multiple files in a single file
 ```
 
@@ -225,9 +259,9 @@ Allows you to go from current directory to specified directory. Calling it witho
 
 ```
 cd Documents				# change destination into directory Documents defined by relative path
-cd home/user01/Documents	# change destination into directory Documents defined by absolute path 
-cd ~ 						# change destination into user home directory
-cd /						# change destination into root directory
+cd home/user01/Documents		# change destination into directory Documents defined by absolute path 
+cd ~					# change destination into user home directory
+cd /					# change destination into root directory
 ```
 
 ### pwd
@@ -235,15 +269,15 @@ Prints your current directory. Useful if your prompt doesn’t contain this info
 
 ```
 pwd		# print your current working directory
-pwd -L	# print working directory from environment even if it contains symlinks
-pwd -I	# print actual physical current working directory by resolving all symbolic links.
+pwd -L		# print working directory from environment even if it contains symlinks
+pwd -I		# print actual physical current working directory by resolving all symbolic links.
 ```
 
 ### mkdir
 Create new directories. The most handy switch is -p, which creates the entire specified structure if it doesn’t exist already.
 
 ```
-mkdir dogs					# create directory with name dogs in current directory
+mkdir dogs			# create directory with name dogs in current directory
 mkdir -p dir1/dir2/dir3		# parent directories (if non-existent) are created
 ```
 
@@ -252,7 +286,7 @@ mkdir -p dir1/dir2/dir3		# parent directories (if non-existent) are created
 Tells you the type of a file. Since files in Linux aren’t under obligation to have extensions for the system to work (not that having extensions always helps), sometimes it’s hard for the user to know what type of file something is, and this little utility solves that problem.
 
 ```
-file notes.txt				# determine file type
+file notes.txt			# determine file type
 file note1.txt note2.txt	# determine type of multiple files
 ```
 
@@ -261,9 +295,9 @@ Copies files and directories. Since it doesn’t copy directories recursively by
 
 ```
 cp main.c bak						# copy single file main.c to destination directory bak
-cp main.c def.h /home/usr/rapid/	# copy 2 files main.c and def.h to directory rapid
-cp *.c bak							# copy all C files in current directory to subdirectory bak
-cp src /home/usr/rapid/				# copy directory src to directory rapid
+cp main.c def.h /home/usr/rapid/			# copy 2 files main.c and def.h to directory rapid
+cp *.c bak						# copy all C files in current directory to subdirectory bak
+cp src /home/usr/rapid/					# copy directory src to directory rapid
 cp -R dev bak						# copy all files and directories in dev recursively to directory bak
 cp -f test.c bak					# force file copy
 ```
@@ -272,7 +306,7 @@ cp -f test.c bak					# force file copy
 Moves or renames files and directories. Essentially, moving and renaming is one operation – renaming is just “moving” a single file to the same place under a different name.
 
 ```
-mv names.txt fullnames.txt			# rename file name.txt onto fullnames.txt
+mv names.txt fullnames.txt		# rename file name.txt onto fullnames.txt
 mv -i names.txt fullnames.txt		# rename file, but prompts before overwriting
 mv -n names.txt fullnames.txt		# rename file, but not overwrite an existing file
 ```
@@ -302,8 +336,8 @@ With Hard Link, more than one file name reference the same inode number. Once yo
 
 ```
 ln -s /home/chris/src/library.so library.so		# create a symbolic link for a File
-ln -s /home/chris/obj objects					# create a symbolic link for a directory
-ln src_original.txt dst_link.txt				# create hard link for files
+ln -s /home/chris/obj objects				# create a symbolic link for a directory
+ln src_original.txt dst_link.txt			# create hard link for files
 ```
 
 
@@ -326,8 +360,8 @@ __Note__: Here the digits 7, 5, and 4 each individually represent the permission
 The concept of owner and groups for files is fundamental to Linux. Every file is associated with an owner and a group. You can use chown and chgrp commands to change the owner or the group of a particular file or directory.
 
 ```
-chown root tmpfile					# change the owner of a file
-chown :friends tmpfile				# change the group of a file
+chown root tmpfile			# change the owner of a file
+chown :friends tmpfile			# change the group of a file
 chown himanshu:friends tmpfile		# change both owner and the group
 ```
 
@@ -335,55 +369,170 @@ chown himanshu:friends tmpfile		# change both owner and the group
 ### find
 Search the filesystem for files or directories. Find is a very versatile and powerful command, not only because of its searching capabilities, but also because it allows you to execute arbitrary commands on matching (or non-matching, even) files.
 
+```
+find . -name file.txt		# find files using name in current directory
+find /home -name tecmint.txt	# Find Files Under Home Directory
+find /home -iname tecmint.txt	# Find Files Using Name and Ignoring Case
+find / -type d -name Tecmint	# Find Directories Using Name
+find . -type f -name "*.php"	# Find all PHP Files in Directory
+```
+
+
 ### locate
 Unlike find, locate searches the updatedb database for file name patterns. This database contains a snapshot of the filesystem. This makes locate very fast, but also unreliable – it cannot tell whether anything changed since the last snapshot.
+
+```
+locale file.txt			# find file in precomputed database files
+locale -i "file.txt"		# find file by ignore case sensitive in precomputer database
+locale "*.html" -n 20		# find just 20 result from your query
+locale "*.html" -c		# display the number of matching entries
+```
 
 ### du
 Show file or directory size. Among the more useful options are -h, which converts the reported sizes into a more human-friendly format, -s which gives only a summary instead of the whole listing, and -d which controls the depth of directory recursion.
 
+```
+du -sh file.txt		# displays disk usage file.txt with human readable values (KB, MB, GB) 
+du -ah			# displays disk usage of all files and folder in current directory
+du -cah 		# displays disk usage of all files and folder in current directory with grand total disk space at the last line
+```
+
 ### df
 Show disk usage. The default output is good enough – it lists every filesystem, reports its size and the amount of used and available space – but you might want to tack on -h, which once again provides a more human-friendly report.
 
+```
+df -h 	# displays disk usage on all mounted volumes with human readable values (KB, MB, GB)
+```
+
 ### dd
-Convert and copy a file, according to its manpage. Not exactly the clearest or most useful description around, and yet, that’s all dd does. You give it a source and a destination, and optionally some other commands, and it copies from one to the other. Its power comes from the flexibility – you can tell it the exact block size, it can copy around corrupted data, and it isn’t picky about devices – if you want to overwrite your hard drive with zeroes straight from /dev/zero, you’re welcome to do it. It’s also commonly used for creating live USB sticks from hybrid ISO images.
+The dd command copies a file, converting the format of the data in the process, according to the operands specified. Its power comes from the flexibility – you can tell it the exact block size, it can copy around corrupted data, and it isn’t picky about devices – if you want to overwrite your hard drive with zeroes straight from /dev/zero, you’re welcome to do it. It’s also commonly used for creating live USB sticks from hybrid ISO images.
+
+```
+dd if=/dev/sda of=~/disk1.img		# create a ISO disc image from the CD in the computer
+dd if=/dev/sda of=~/disk1.img		# create an img file of the /dev/sda hard drive
+dd if=disk1.img of=/dev/sda		# restore backup image onto hard drive sda
+dd if=/dev/zero of=/dev/sdX bs=1M	# securely erase a hard drive with zeroes
+```
+
 
 ### mount / unmount
 This pair takes care of mounting and unmounting filesystems. This can range from USB sticks to ISO images. Usually only root has mounting privileges.
 
+```
+mount /dev/sda5 /home/xp 	# mount sda5 drive on directory xp
+umount /home/xp			# unmount drive sda5 from directory xp
+```
+
+<a name="linuxCommandsForTextProcessing"></a>
 ## Linux commands for text processing
 
 ### more and less
 These two similar utilities allow you to view text chunked into screenfuls. Imagine a very long output from some command. Perhaps you called cat on a file and your terminal emulator took a few seconds to scroll all the text. Well, if you pipe it into one of these, you can now scroll it at your leisure. Less is newer and offers more options, so there is no reason to use more.
 
+```
+more file.txt		# sequentially read the content of file on the screen
+cat file.txt | more 	# sequentially read the content of file on the screen
+less file.txt		# sequentially read the content of file on the screen
+cat file.txt | less 	# sequentially read the content of file on the screen
+```	
+
 ### head and tail
 Another pair, but here both halves have their uses. Head outputs a number of the first (“head”) lines of a file, while tail outputs a number of last (“tail”) lines of a file. The default number is ten, but this can be controlled via the -n option. Another useful switch is -f, which is short for “follow”, which continually outputs any appended lines – so, for instance, if you wanted to monitor a log file instead of constantly opening and closing it, you could use “tail -f /path/to/logfile”.
+
+```	
+head flavours.txt	# view the first 10 number of lines from given file
+head -n 5 flavours.txt 	# view the first N number of lines from given file
+head -5 flavours.txt 	# view the first N number of lines from given file
+
+tail flavours.txt	# view the last 10 number of lines from given file
+tail -n 5 flavours.txt	# view the last N number of lines from given file
+tail -5 flavours.txt	# view the last N number of lines from given file
+tail -f perf.log	# view appended lines of file instantly
+```	
 
 ### grep
 Grep, like all good Unix tools, does one thing, but does it well. It searches text for patterns. By default it looks at standard input, but you can specify files to be searched. A pattern can be a normal string or a regular expression. It can print out matching or non-matching lines, and their context. Every time you run a command which spews a lot of information you don’t need, pipe it into grep and let it do its magic.
 
+```	
+grep "this" demo_file			# Search for the given string in a single file
+grep "string" FILE_PATTERN		# Checking for the given string in multiple files
+grep -i "string" FILE			# Case insensitive search in file
+grep -v "string" demo_file		# search lines in file does not contains given string
+grep -A 3 -i "ex" demo_file		# display N lines after match
+grep -B 3 -i "ex" demo_file		# display N lines before match
+grep -C 3 -i "ex" demo_file		# display N lines aroung match
+
+# Match regular expression in files
+grep "lines.*empty" demo_file
+
+# highlighting result of search
+export GREP_OPTIONS='--color=auto' GREP_COLOR='100;8'
+```	
+
 ### sort
 Sorts lines of text by various criteria. Among the more useful, there’s -n, which sorts by the numeric value of a string, and -r, which reverses the output. An example of where this might come in handy is sorting du output – for example, if you wanted to see the files sorted in descending order according to size, you’d combine the two options.
+
+```	
+sort file.txt		# display sort the lines in this file alphabetically
+sort -r file.txt	# display sort the lines in file revese order alphabetically
+sort -n file.txt	# display sort the lines in this file numerically
+sort -rn file.txt	# display sort the lines in this file reverse order numerically
+```	
 
 ### wc
 The command line word counting utility. And line counting. And byte counting. And character counting.
 
+```	
+wc -l file.txt		# print the newline counts in the file
+wc -w file.txt		# print the word counts in the file
+wc -m file.txt		# print the character counts in the file
+```	
+
+
 ### diff
 Shows the difference between two files via line by line comparison. It only shows altered lines, abbreviating changed as c, deleted as d and added as a.
 
+```	
+diff file1 file2		# show difference between file1 and file2 line by line
+```	
+
+<a name=linuxCommandsForProcessManagement></a>
 ## Linux commands for process management
 
 ### kill / xkill / pkill / killall
 All of these serve to “kill” a process, ie terminate it. The difference is what they accept as input. Kill wants the process ID, xkill allows you to click a window to close it, while killall and pkill accept the name of a process, but have somewhat different options and subtly different behavior. Note these do not belong to the same package, and xkill especially is not likely to be installed by default. We advise you to rectify that for your own convenience.
 
+```	
+kill 257			# kill process with PID (Process ID) 257
+kill 1212 1313 1414		# kill multiple process
+kill --TERM -257		# kill process with PID 257 and all child processes
+```	
+
+
 ### ps / pgrep
 As mentioned, kill needs the process ID. One way to obtain this is by using ps, which prints information about the currently active processes. The default output is not hugely useful, so stick an -e there to see information about every process on the system. This is only a snapshot, it will not update, see top for that. The pgrep command works in the following manner: you give it a process name, it gives you the process ID. Partial matches count, so be careful.
+
+```	
+pgrep firefox			# find PID for process named firefox
+ps aux | grep [f]irefox		# find PID for process named firefox
+```	
 
 ### top / htop
 These two are similar, both display processes, and can be thought of as console system monitors. We recommend you install htop the first chance you get if your distribution doesn’t ship it by default, as it’s a much improved version of top. For starters, it’s not merely a viewer – it allows you to control processes via its user-friendly console GUI interface.
 
+```	
+top	# display and update sorted information about processes
+htop	# better formated top command
+```	
+
 ### time
 Time a process. Think of it as a stopwatch for program execution. Useful if you’re curious how much slower is your homework implementation of a sorting algorithm compared to the built-in one. Contrary to what you might expect based on the name, it doesn’t tell you the time. See date for that.
 
+```	
+time sort.py input.txt	# display total time execution program
+```	
+
+<a name="linuxCommandsForBASH"></a>
 ## Linux commands for BASH and user environment
 
 ### su / sudo
@@ -415,6 +564,7 @@ These commands allow you do add, delete and modify user accounts. It’s not ver
 ### passwd
 This command enables you to change your user account password. As root, you can reset normal user passwords, though you cannot view them. It’s a good security practice to change your password every so often.
 
+<a name="linuxCommandsForDocumentation"></a>
 ## Linux commands for help / documentation
 
 ### man / whatis
@@ -423,6 +573,7 @@ The man command brings up the manual for a particular command. Most command line
 ### whereis
 Tells you where an executable binary files lives, provided it’s in your path. It can also find its manual page and source code, provided they are present.
 
+<a name="linuxCommandsForNetwork"></a>
 ## Linux commands for network
 
 ### ip
@@ -441,6 +592,7 @@ Besides downloading, you may want to obtain information about a URL, such as the
 Print the route packets take to network host. The Internet is a large and complex aggregation of network hardware, connected together by gateways.  Tracking the route one's packets follow (or finding the miscreant gateway that's discarding your packets) can be difficult.  traceroute utilizes the IP protocol `time to live' field and attempts to elicit an ICMP TIME_EXCEEDED response from each gateway along
 the path to some host. The only mandatory parameter is the destination host name or IP number.
 
+<a name="packageManagementSystem"></a>
 ## Package management system
 The core parts of a Linux distribution and most of its add-on software are installed via the Package Management System. Each package contains the files and other instructions needed to make one software component work on the system. Packages can depend on each other. For example, a package for a web-based application written in PHP can depend on the PHP package.
 
@@ -483,15 +635,19 @@ zypper list				   # show installed packages on your system
 zypper update              # update your repository with reference on software
 ```
 
+<a name="streams"></a>
 ## Streams
 TO-DO
 
+<a name="process"></a>
 ## Process
 TO-DO
 
-## Text editor
+<a name="textEditors"></a>
+## Text editors
 TO-DO
 
+<a name="userEnvironment"></a>
 ## User environment
 TO-DO
 
