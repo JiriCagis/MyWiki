@@ -118,4 +118,4 @@ Predem definovana krajni hranice, pri niz dobrovolne inkasujeme malou ztratu dri
 Je to oblast, za kterou se nam ukonci otevrene pozice se ztratou, kterou si predem stanovime. Jedna se o zakladni ochranu proti krachu.
 
 ### Take profit, profit target (realizace zisku)
-Jedna se o prikaz, ktery umistime na cenu, pri niz chceme realizovat zisk z nasi otevrene pozice. Prikaz urc na jake cene broker ukonci nasi otevrenou pozici se ziskem.
+Jedna se o prikaz, ktery umistime na cenu, pri niz chceme realizovat zisk z nasi otevrene pozice. Prikaz urci na jake cene broker ukonci nasi otevrenou pozici se ziskem.
