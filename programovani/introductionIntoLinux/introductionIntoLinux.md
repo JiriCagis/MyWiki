@@ -633,27 +633,68 @@ passwd -n 10 dog	# set minimum days to change password
 ### man / whatis
 The man command brings up the manual for a particular command. Most command line applications come with a man page. Whatis provides a one line summary lifted from the relevant sections of the manual. What are sections of the manual? See for yourself with “man man”.
 
+```	
+whatis	cat		# show short manual for command cat
+man cat		# show complete manual for command cat
+```	
+
+
 ### whereis
 Tells you where an executable binary files lives, provided it’s in your path. It can also find its manual page and source code, provided they are present.
+
+```	
+whereis cat		# show source directory of command cat
+```	
 
 <a name="linuxCommandsForNetwork"></a>
 ## Linux commands for network
 
 ### ip
-If the list of network related commands seems awfully short, you’re probably not acquainted with ip. In short, the net-utils package which contains ipconfig, netstat and others has been deprecated in favor of the iproute2 package. It provides the ip command, which replaces ipconfig, netstat, route, etc. You could view it as a Swiss Army knife of networking, or a unwanted mess, but either way, it’s the future.
+The ip command is used to assign an address to a network interface and/or configure network interface parameters on Linux operating systems. This command replaces old good and now deprecated ifconfig command on modern Linux distributions.
+
+```	
+ip addr				# display info about all network interfaces
+ip -4 addr			# display info about only TCP/IP v.4 network interfaces
+ip -6 addr			# display info about only TCP/IP v.6 network interfaces
+ip addr show eth0	# display only eth0 interface
+ip link ls up			# display only running interfaces
+
+ip a add 192.168.1.200/255.255.255.0 dev eth0	# assign ip address on eth0
+ip a del 192.168.1.200/24 dev eth0	# remove ip address from the interface
+ip addr add broadcast 172.20.10.255 dev eth0	# assign broadcast address on eth0
+ip link set dev eth1 down	# stop running interface eth1
+ip link set dev eth1 up		# start interface eth1
+```	
 
 ### ping
 Pings are ICMP ECHO_REQUEST datagrams, but that’s not important. The important thing is that the ping utility is a useful diagnostic tool. It allows you to quickly test if you’re connected to your router or the Internet, and gives some indication of the quality of that connection.
 
+```	
+ping www.google.com
+ping 216.58.212.78
+```	
+
 ### wget
 Wget is a command line utility that can capably handle the following types of downloads: Large file downloads, Recursive downloads, where a web page refers to other web pages and all are downloaded at once, Password-required downloads or Multiple file downloads.
+
+```	
+wget http://website.com/files/file.zip
+```	
 
 ### curl
 Besides downloading, you may want to obtain information about a URL, such as the source code being used. curl can be used from the command line or a script to read such information. curl also allows you to save the contents of a web page to a file, as does wget.
 
+```	
+curl http://www.centos.org > centos-org.html
+```	
+
 ### traceroute
 Print the route packets take to network host. The Internet is a large and complex aggregation of network hardware, connected together by gateways.  Tracking the route one's packets follow (or finding the miscreant gateway that's discarding your packets) can be difficult.  traceroute utilizes the IP protocol `time to live' field and attempts to elicit an ICMP TIME_EXCEEDED response from each gateway along
 the path to some host. The only mandatory parameter is the destination host name or IP number.
+
+```	
+traceroute www.google.cz
+```	
 
 <a name="packageManagementSystem"></a>
 ## Package management system
