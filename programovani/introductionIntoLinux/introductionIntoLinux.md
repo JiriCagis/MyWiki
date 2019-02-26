@@ -538,31 +538,94 @@ time sort.py input.txt	# display total time execution program
 ### su / sudo
 Su and sudo are two ways of accomplishing the same thing – running a command as another user. Depending on what your distribution is, you’ve likely seen only one or the other, but both are serviceable. The difference is that su switches you to a different user, while sudo only runs the command with another user’s privileges.
 
+```	
+sudo command 		# run the command with another users privileges
+cat /etc/sudoers	# display users have sudo privileges
+su					# switch you to the super user or root user
+su bob				# switch you to the bob account
+```	
+
 ### date
 Unlike time, date does exactly what you’d expect it – it prints out the date (and time) to the standard output. The output itself can be formatted to your specification, and it takes everything from the usual stuff like year, month, day,
 12 or 24 hour format to nanoseconds and the ISO week number. For example, date +”%j %V” would give you the day of the year followed by the ISO week number.
 
+```	
+date	# print actuall date time into terminal
+```	
+
 ### alias
 This commands creates or changes aliases to other commands. What this means is, you can give names to new commands (or groupings of commands) or “rename” existing ones. It’s very handy for abbreviating long strings of commands you find yourself using often, or giving more memorable names to things you don’t use that often and have problems memorizing.
 
+```	
+alias shortName="your custom command here"
+```	
+
 ### uname
 Outputs some basic system information. By itself, it won’t give you anything very useful (“Linux”), but call it with -a, and it will provide kernel information, as well as tell you the hostname and processor architecture.
+
+```	
+uname -a		# print all system information
+uname -s		# print the kernel name
+uname -n		# print the network node hostname
+uname -r		# print kernel release
+uname -v 		# print kernel version
+uname -m		# print the machine hardware name
+uname -p		# print the processor type
+uname -i		# print the hardware platform 
+```	
 
 ### uptime
 
 Tells you how long has the system been running. Not exactly essential information, but good for bragging rights and the occasional compute-things-relative-to-how-long-I’ve-been-at-the-computer situation.
 
+```	
+uptime			# print how long the system running
+uptime -p		# print how long the system running in pretty format
+```	
+
+
 ### sleep
 
 You might be wondering why or how would this ever be useful, but even outside BASH scripts, it has its uses: for example, if you’d like to shutdown the computer after a certain period of time, or even as a makeshift alarm.
+
+```	
+sleep 60 | start.sh		# it run start.sh script after 60 seconds sleep
+```	
+
 
 ## Linux commands for user management
 
 ### useradd, userdel, usermod
 These commands allow you do add, delete and modify user accounts. It’s not very likely you’ll be using these often, especially if you’re the sole user of your system, and even if not, you might opt for doing this via a GUI, but it’s good to know what they do and that they’re there in case you suddenly need them.
 
+```	
+useradd dog						# create user with name dog
+useradd -G admins, dev dog		# create user dog with assigned into many group
+userdel dog						# delete user dog and all asociated files
+usermod -d /var/www/ dog		# change user home directory
+usermod -e 2014-11-01 dog		# set expiration time for user
+usermod -G office dog			# add group to existing user
+usermod -l dog					# lock user dog
+
+cat /etc/passwd 					# display user account information
+cat /etc/shadow					# display secure account information
+cat /etc/group					# display group account information
+cat /etc/gshadow					# display secure group account information
+cat /etc/login.defs				# display shadow password suite configuration
+```	
 ### passwd
-This command enables you to change your user account password. As root, you can reset normal user passwords, though you cannot view them. It’s a good security practice to change your password every so often.
+As the name suggest passwd command is used to change the password of system users. If the passwd command is executed by non-root user then it will ask for the current password and then set the new password of a user who invoked the command. When this command is executed by super user or root then it can reset the password for any user including root without knowing the current password.
+
+```	
+passwd				# change password of current user
+passwd dog		# change passwrod of dog user
+passwd -S dog		# display password status information
+
+passwd -d dog		# remove password
+passwd -e dog		# expire password immediately
+passwd -w 10 dog	# set warning days before password expire 
+passwd -n 10 dog	# set minimum days to change password
+```	
 
 <a name="linuxCommandsForDocumentation"></a>
 ## Linux commands for help / documentation
