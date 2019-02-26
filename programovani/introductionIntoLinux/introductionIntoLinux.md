@@ -541,8 +541,8 @@ Su and sudo are two ways of accomplishing the same thing – running a command a
 ```	
 sudo command 		# run the command with another users privileges
 cat /etc/sudoers	# display users have sudo privileges
-su					# switch you to the super user or root user
-su bob				# switch you to the bob account
+su			# switch you to the super user or root user
+su bob			# switch you to the bob account
 ```	
 
 ### date
@@ -550,7 +550,7 @@ Unlike time, date does exactly what you’d expect it – it prints out the date
 12 or 24 hour format to nanoseconds and the ISO week number. For example, date +”%j %V” would give you the day of the year followed by the ISO week number.
 
 ```	
-date	# print actuall date time into terminal
+date			# print actuall date time into terminal
 ```	
 
 ### alias
@@ -589,7 +589,7 @@ uptime -p		# print how long the system running in pretty format
 You might be wondering why or how would this ever be useful, but even outside BASH scripts, it has its uses: for example, if you’d like to shutdown the computer after a certain period of time, or even as a makeshift alarm.
 
 ```	
-sleep 60 | start.sh		# it run start.sh script after 60 seconds sleep
+sleep 60 | start.sh	# it run start.sh script after 60 seconds sleep
 ```	
 
 
@@ -599,25 +599,25 @@ sleep 60 | start.sh		# it run start.sh script after 60 seconds sleep
 These commands allow you do add, delete and modify user accounts. It’s not very likely you’ll be using these often, especially if you’re the sole user of your system, and even if not, you might opt for doing this via a GUI, but it’s good to know what they do and that they’re there in case you suddenly need them.
 
 ```	
-useradd dog						# create user with name dog
-useradd -G admins, dev dog		# create user dog with assigned into many group
-userdel dog						# delete user dog and all asociated files
-usermod -d /var/www/ dog		# change user home directory
-usermod -e 2014-11-01 dog		# set expiration time for user
-usermod -G office dog			# add group to existing user
-usermod -l dog					# lock user dog
+useradd dog			# create user with name dog
+useradd -G admins, dev dog	# create user dog with assigned into many group
+userdel dog			# delete user dog and all asociated files
+usermod -d /var/www/ dog	# change user home directory
+usermod -e 2014-11-01 dog	# set expiration time for user
+usermod -G office dog		# add group to existing user
+usermod -l dog			# lock user dog
 
-cat /etc/passwd 					# display user account information
-cat /etc/shadow					# display secure account information
-cat /etc/group					# display group account information
-cat /etc/gshadow					# display secure group account information
-cat /etc/login.defs				# display shadow password suite configuration
+cat /etc/passwd 		# display user account information
+cat /etc/shadow			# display secure account information
+cat /etc/group			# display group account information
+cat /etc/gshadow		# display secure group account information
+cat /etc/login.defs		# display shadow password suite configuration
 ```	
 ### passwd
 As the name suggest passwd command is used to change the password of system users. If the passwd command is executed by non-root user then it will ask for the current password and then set the new password of a user who invoked the command. When this command is executed by super user or root then it can reset the password for any user including root without knowing the current password.
 
 ```	
-passwd				# change password of current user
+passwd			# change password of current user
 passwd dog		# change passwrod of dog user
 passwd -S dog		# display password status information
 
@@ -670,9 +670,9 @@ Advanced packaging tool is the package management system that manages software o
 apt-cache search python     # search available programs with substring python
 apt-get install python      # install program python
 apt-get remove python       # uninstall program python
-apt-get list				# show installed packages on your system
+apt-get list	 	    # show installed packages on your system
 apt-get update              # update your repository with reference on software
-apt-get upgrade				# upgrade operation system onto new version
+apt-get upgrade		    # upgrade operation system onto new version
 ```
 **yum**
 
@@ -682,7 +682,7 @@ Yellowdog Updater Modified is the package management system used for RPM compati
 yum search python       # search available programs with substring python
 yum install python      # install program python
 yum remove python       # uninstall program python
-yum list				# show installed packages on your system
+yum list		# show installed packages on your system
 yum update              # update your repository with reference on software
 ```
 
@@ -694,7 +694,7 @@ Zypper is the package management system used for openSUSE distributions.
 zypper search python       # search available programs with substring python
 zypper install python      # install program python
 zypper remove python       # uninstall program python
-zypper list				   # show installed packages on your system
+zypper list		   # show installed packages on your system
 zypper update              # update your repository with reference on software
 ```
 
