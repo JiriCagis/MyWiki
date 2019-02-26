@@ -635,7 +635,7 @@ The man command brings up the manual for a particular command. Most command line
 
 ```	
 whatis	cat		# show short manual for command cat
-man cat		# show complete manual for command cat
+man cat			# show complete manual for command cat
 ```	
 
 
@@ -643,7 +643,7 @@ man cat		# show complete manual for command cat
 Tells you where an executable binary files lives, provided it’s in your path. It can also find its manual page and source code, provided they are present.
 
 ```	
-whereis cat			# show source directory of command cat
+whereis cat		# show source directory of command cat
 ```	
 
 <a name="linuxCommandsForNetwork"></a>
