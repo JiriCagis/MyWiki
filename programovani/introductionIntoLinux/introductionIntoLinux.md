@@ -643,7 +643,7 @@ man cat		# show complete manual for command cat
 Tells you where an executable binary files lives, provided it’s in your path. It can also find its manual page and source code, provided they are present.
 
 ```	
-whereis cat		# show source directory of command cat
+whereis cat			# show source directory of command cat
 ```	
 
 <a name="linuxCommandsForNetwork"></a>
@@ -656,14 +656,14 @@ The ip command is used to assign an address to a network interface and/or config
 ip addr				# display info about all network interfaces
 ip -4 addr			# display info about only TCP/IP v.4 network interfaces
 ip -6 addr			# display info about only TCP/IP v.6 network interfaces
-ip addr show eth0	# display only eth0 interface
+ip addr show eth0		# display only eth0 interface
 ip link ls up			# display only running interfaces
 
 ip a add 192.168.1.200/255.255.255.0 dev eth0	# assign ip address on eth0
-ip a del 192.168.1.200/24 dev eth0	# remove ip address from the interface
+ip a del 192.168.1.200/24 dev eth0		# remove ip address from the interface
 ip addr add broadcast 172.20.10.255 dev eth0	# assign broadcast address on eth0
-ip link set dev eth1 down	# stop running interface eth1
-ip link set dev eth1 up		# start interface eth1
+ip link set dev eth1 down			# stop running interface eth1
+ip link set dev eth1 up				# start interface eth1
 ```	
 
 ### ping
