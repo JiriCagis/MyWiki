@@ -741,11 +741,178 @@ zypper update              # update your repository with reference on software
 
 <a name="streams"></a>
 ## Streams
-TO-DO
+### Standard file streams
+When commands are executed, by default there are three standard file streams (or descriptors) always open for use: standard input (standard in or stdin), standard output (standard out or stdout) and standard error (or stderr).
+
+Usually, stdin is your keyboard, and stdout and stderr are printed on your terminal. stderr is often redirected to an error logging file, while stdin is supplied by directing input to come from a file or from the output of a previous command through a pipe. stdout is also often redirected into a file. Since stderr is where error messages are written, usually nothing will go there.
+
+In Linux, all open files are represented internally by what are called file descriptors. Simply put, these are represented by numbers starting at zero. stdin is file descriptor 0, stdout is file descriptor 1, and stderr is file descriptor 2. Typically, if other files are opened in addition to these three, which are opened by default, they will start at file descriptor 3 and increase from there.
+
+|Name  			|Symbolic name   |Value   |Example   | 
+|----------------|---------------|--------|-----------|
+|standard input  |stdin   			|0	      |keyboard  |
+|standard output |stdout		   |1  	   |terminal  |
+|standard error  |stderr   	   |2		   |log file  |
+
+### I/O redirection
+Through the command shell, we can redirect the three standard file streams so that we can get input from either a file or another command, instead of from our keyboard, and we can write output and errors to files or use them to provide input for subsequent commands.
+
+For example, if we have a program called do_something that reads from stdin and writes to stdout and stderr, we can change its input source by using the less-than sign ( < ) followed by the name of the file to be consumed for input data:
+
+```
+do_something < input-file
+```
+If you want to send the output to a file, use the greater-than sign (>) as in:
+
+```
+do_something > output-file
+```
+
+Because stderr is not the same as stdout, error messages will still be seen on the terminal windows in the above example.
+
+If you want to redirect stderr to a separate file, you use stderr’s file descriptor number (2), the greater-than sign (>), followed by the name of the file you want to hold everything the running command writes to stderr:
+
+```
+do_something 2> error-file
+```
+
+Note: By the same logic, do_something 1> output-file is the same as do_something > output-file.
+
+A special shorthand notation can send anything written to file descriptor 2 (stderr) to the same place as file descriptor 1 (stdout): 2>&1.
+
+```
+do_something > all-output-file 2>&1
+```
+bash permits an easier syntax for the above:
+
+```
+do_something >& all-output-file
+```
+
+### Pipes
+The UNIX/Linux philosophy is to have many simple and short programs (or commands) cooperate together to produce quite complex results, rather than have one complex program with many possible options and modes of operation. In order to accomplish this, extensive use of pipes is made. You can pipe the output of one command or program into another as its input.
+
+In order to do this, we use the vertical-bar, |, (pipe symbol) between commands as in:
+
+```
+command1 | command2 | command3
+```
+
+The above represents what we often call a pipeline, and allows Linux to combine the actions of several commands into one. This is extraordinarily efficient because command2 and command3 do not have to wait for the previous pipeline commands to complete before they can begin hacking at the data in their input streams; on multiple CPU or core systems, the available computing power is much better utilized and things get done quicker.
+
+Furthermore, there is no need to save output in (temporary) files between the stages in the pipeline, which saves disk space and reduces reading and writing from disk, which is often the slowest bottleneck in getting something done.
+
+<div align="center">
+	<img src="images/pipeline.png" width="70%">
+</div>
 
 <a name="process"></a>
 ## Process
-TO-DO
+### What is process?
+A process is simply an instance of one or more related tasks (threads) executing on your computer. It is not the same as a program or a command. A single command may actually start several processes simultaneously. Some processes are independent of each other and others are related. A failure of one process may or may not affect the others running on the system.
+
+Processes use many system resources, such as memory, CPU (central processing unit) cycles, and peripheral devices, such as printers and displays. The operating system (especially the kernel) is responsible for allocating a proper share of these resources to each process and ensuring overall optimized system utilization.
+
+### Process types
+|Process type		|Description	|Example|
+|----------------|------------|-------|
+| Interactive 	|Need to be started by a user, either at a command line or through a graphical interface such as an icon or a menu selection.| bash, firefox, top|
+|Batch Processes	|Automatic processes which are scheduled from and then disconnected from the terminal. These tasks are queued and work on a FIFO (first-in, first-out) basis.	|updatedb|
+|Daemons |Server processes that run continuously. Many are launched during system startup and then wait for a user or system request indicating that their service is required.|httpd, xinetd, sshd|
+|Threads|	Lightweight processes. These are tasks that run under the umbrella of a main process, sharing memory and other resources, but are scheduled and run by the system on an individual basis. An individual thread can end without terminating the whole process and a process can create new threads at any time. Many non-trivial programs are multi-threaded.	|firefox, gnome-terminal-server|
+|Kernel Threads|	Kernel tasks that users neither start nor terminate and have little control over. These may perform actions like moving a thread from one CPU to another, or making sure input/output operations to disk are completed.|kthreadd, migration, ksoftirqd|
+
+### Process scheduling and states
+A critical kernel function called the scheduler constantly shifts processes on and off the CPU, sharing time according to relative priority, how much time is needed and how much has already been granted to a task.  
+
+When a process is in a so-called running state, it means it is either currently executing instructions on a CPU, or is waiting to be granted a share of time (a time slice) so it can execute. All processes in this state reside on what is called a run queue and on a computer with multiple CPUs, or cores, there is a run queue on each.
+
+<div align="center">
+	<img src="images/processScheduling.jpg" width="50%">
+</div>
+
+However, sometimes processes go into what is called a sleep state, generally when they are waiting for something to happen before they can resume, perhaps for the user to type something. In this condition, a process is sitting on a wait queue.
+
+There are some other less frequent process states, especially when a process is terminating. Sometimes, a child process completes, but its parent process has not asked about its state. Amusingly, such a process is said to be in a zombie state; it is not really alive, but still shows up in the system's list of processes.
+
+### Process and Thread IDs
+At any given time, there are always multiple processes being executed. The operating system keeps track of them by assigning each a unique process ID (PID) number. The PID is used to track process state, CPU usage, memory use, precisely where resources are located in memory, and other characteristics.
+
+New PIDs are usually assigned in ascending order as processes are born. Thus, PID 1 denotes the init process (initialization process), and succeeding processes are gradually assigned higher numbers.
+
+The table explains the PID types and their descriptions:
+
+|ID Type						|Description|
+|-------------------------|------------|
+|Process ID (PID)			|Unique Process ID number|
+|Parent Process ID (PPID)	|Process (Parent) that started this process. If the parent dies, the PPID will refer to an adoptive parent; on recent kernels, this is kthreadd which has PPID=2.|
+|Thread ID (TID)				|Thread ID number. This is the same as the PID for single-threaded processes. For a multi-threaded process, each thread shares the same PID, but has a unique TID.|
+
+### User and Group IDs
+Many users can access a system simultaneously, and each user can run multiple processes. The operating system identifies the user who starts the process by the Real User ID (RUID) assigned to the user.
+
+The user who determines the access rights for the users is identified by the Effective UID (EUID). The EUID may or may not be the same as the RUID.
+
+Users can be categorized into various groups. Each group is identified by the Real Group ID (RGID). The access rights of the group are determined by the Effective Group ID (EGID). Each user can be a member of one or more groups.
+
+### Priorities
+At any given time, many processes are running (i.e. in the run queue) on the system. However, a CPU can actually accommodate only one task at a time, just like a car can have only one driver at a time. Some processes are more important than others, so Linux allows you to set and manipulate process priority. Higher priority processes are granted more time on the CPU.
+
+The priority for a process can be set by specifying a nice value, or niceness, for the process. The lower the nice value, the higher the priority. Low values are assigned to important processes, while high values are assigned to processes that can wait longer. A process with a high nice value simply allows other processes to be executed first. In Linux, a nice value of -20 represents the highest priority and 19 represents the lowest. This does sound kind of backwards, but this convention, the nicer the process, the lower the priority, goes back to the earliest days of UNIX.
+
+### Background and foreground processes
+Linux supports background and foreground job processing. A job in this context is just a command launched from a terminal window. Foreground jobs run directly from the shell, and when one foreground job is running, other jobs need to wait for shell access (at least in that terminal window if using the GUI) until it is completed. This is fine when jobs complete quickly. But this can have an adverse effect if the current job is going to take a long time (even several hours) to complete.
+
+In such cases, you can run the job in the background and free the shell for other tasks. The background job will be executed at lower priority, which, in turn, will allow smooth execution of the interactive tasks, and you can type other commands in the terminal window while the background job is running. By default, all jobs are executed in the foreground. You can put a job in the background by suffixing & to the command, for example: updatedb &.
+
+You can either use CTRL-Z to suspend a foreground job or CTRL-C to terminate a foreground job and can always use the bg and fg commands to run a process in the background and foreground, respectively.
+
+### Scheduling future processes using at
+Suppose you need to perform a task on a specific day sometime in the future. However, you know you will be away from the machine on that day. How will you perform the task? You can use the at utility program to execute any non-interactive command at a specified time, as illustrated in the diagram:
+
+<div align="center">
+	<img src="images/atScheduling.jpg" width="70%">
+</div>
+
+### Scheduling future processes using cron
+cron is a time-based scheduling utility program. It can launch routine background jobs at specific times and/or days on an on-going basis. cron is driven by a configuration file called /etc/crontab (cron table), which contains the various shell commands that need to be run at the properly scheduled times. There are both system-wide crontab files and individual user-based ones. Each line of a crontab file represents a job, and is composed of a so-called CRON expression, followed by a shell command to execute.
+
+The crontab -e command will open the crontab editor to edit existing jobs or to create new jobs. Each line of the crontab file will contain 6 fields:
+
+|Field		|Description		|Values	
+|---------|----------------|---------|
+|MIN		|Minutes			|0 to 59	
+|HOUR		|Hour field		|0 to 23
+|DOM		|Day of Month		|1-31
+|MON		|Month field		|1-12
+|DOW		|Day Of Week		|0-6 (0 = Sunday)
+|CMD		|Command			|Any command to be executed
+
+**Examples:**
+
+The entry * * * * * /usr/local/bin/execute/this/script.sh will schedule a job to execute 'script.sh' every minute of every hour of every day of the month, and every month and every day in the week.
+
+The entry 30 08 10 06 * /home/sysadmin/full-backup will schedule a full-backup at 8.30 a.m., 10-June, irrespective of the day of the week.
+
+### Scheduling future processes using sleep
+Sometimes, a command or job must be delayed or suspended. Suppose, for example, an application has read and processed the contents of a data file and then needs to save a report on a backup system. If the backup system is currently busy or not available, the application can be made to sleep (wait) until it can complete its work. Such a delay might be to mount the backup device and prepare it for writing.
+
+sleep suspends execution for at least the specified period of time, which can be given as the number of seconds (the default), minutes, hours, or days. After that time has passed (or an interrupting signal has been received), execution will resume.
+
+The syntax is:
+
+```
+sleep NUMBER[SUFFIX]...
+```
+
+where SUFFIX may be:
+
+* s for seconds (the default)
+* m for minutes
+* h for hours
+* d for days.
+
+sleep and at are quite different; sleep delays execution for a specific period, while at starts execution at a later time.
 
 <a name="textEditors"></a>
 ## Text editors
