@@ -1,4 +1,6 @@
 # Introduction into Linux
+I am fan to programming and I wrote this post, because operation system Linux and its command line make much easier life for routine programming. The text does not presuppose a deeper knowledge of the Linux operating system, post start of basic. It is history, basic terminology over the file system and the boot process. The larges part of post is devode to a command line. I description more than 40 most used commands. In the end, I write more advanced things such as streams, planning process, editor vim and user environments.
+
 
 Table of contents
 =================
@@ -20,9 +22,10 @@ Table of contents
      * [Linux commands for network](#linuxCommandsForNetwork)
   * [Package management system](#packageManagementSystem)
   * [Streams](#streams)
-  * [Process](#process)
+  * [Processes](#processes)
   * [Text editors](#textEditors)
   * [User environment](#userEnvironment)
+  * [Resources](#resources)
 <!--te-->
 
 <a name=whatIsIt></a>
@@ -806,8 +809,8 @@ Furthermore, there is no need to save output in (temporary) files between the st
 	<img src="images/pipeline.png" width="70%">
 </div>
 
-<a name="process"></a>
-## Process
+<a name="processes"></a>
+## Processes
 ### What is process?
 A process is simply an instance of one or more related tasks (threads) executing on your computer. It is not the same as a program or a command. A single command may actually start several processes simultaneously. Some processes are independent of each other and others are related. A failure of one process may or may not affect the others running on the system.
 
@@ -916,12 +919,207 @@ sleep and at are quite different; sleep delays execution for a specific period, 
 
 <a name="textEditors"></a>
 ## Text editors
-TO-DO
+At some point, you will need to manually edit text files. You might be composing an email off-line, writing a script to be used for bash or other command interpreters, altering a system or application configuration file, or developing source code for a programming language such as C or Java.
+
+Linux Administrators quite often sidestep the text editors, by using graphical utilities for creating and modifying system configuration files. However, this can be more laborious than directly using a text editor, and be more limited in capability. Note that word processing applications including those that are part of office suites are not really basic text editors because they add a lot of extra (usually invisible) formatting information that will probably render system administration configuration files unusable for their intended purpose. So, using text editors really is essential in Linux.
+
+### Partition of Linux editors
+**gedit** is the default text editor of the GNOME desktop environment and part of the GNOME Core Applications. Designed as a general-purpose text editor, gedit emphasizes simplicity and ease of use, with a clean and simple GUI, according to the philosophy of the GNOME project. It includes tools for editing source code and structured text such as markup languages.
+
+**nano** is a text editor for Unix-like computing systems or operating environments using a command line interface. It emulates the Pico text editor, part of the Pine email client, and also provides additional functionality. Unlike Pico, nano is licensed under the GNU General Public License (GPL). Released as free software by Chris Allegretta in 1999, nano became part of the GNU Project in 2001.
+
+**vi** is a screen editor for Linux. Pronounced (vee-aye), vi stands for visual instrument. It is a widely-used default text editor for Unix-based systems and is shipped with vitually all versions of Unix. It exclusively uses the keyboard and provides a very efficient interface for editing programs and scripts. Vi is somewhat difficult to learn, but programmers are happy to go through the learning curve to gain the provided efficiency. In comparison to a general purpose word processor program, VI is tailored to a more specific profile of usage and users – programmers of UNIX-based systems.
+
+**emacs** is one of the oldest and most versatile text editors available for Linux and UNIX-based systems. It's been around for a long time (more than twenty years for GNU emacs) and is well known for its powerful and rich editing features. Emacs is also more than just a text editor; it can be customized and extended with different "modes", enabling it to be used like an Integrated Development Environment (IDE) for programming languages like Java, C or Python.
+
+<div align="center">
+	<img src="images/textEditors.jpg" width="70%">
+</div>
+
+### vim
+Vim is advanded terminal editor beside Nano and Gedit. It compose with many extra features for programmers as show row numbers, text highlight, searching by a regular expression and auto complete code. On the other hand learning more lenght learning curve from scratch. Vim is a text editor that is upwards compatible to Vi. There are a lot of enhancements above Vi.
+
+```
+vim myfile      # Start the vi editor and edit the myfile file
+vim -r myfile   # Start vi and edit myfile in recovery mode from a system crash
+```
+
+**Vim provides three modes:**
+
+* Command mode: is default after start the editor. Keyboard strokes are interpreted as commands that can modify file contents.
+* Insert mode: in this mode you write text into file. Type 'i' to switch to Insert mode from Command mode.
+* Line mode: uses line editing commands inherited from older line editors. You type ':' for switch into this mode.
+
+Note: You can press 'Esc' on keyboard for return to base command mode from any mode.
+Control operations
+
+**Control operations are call from command mode.**
+
+```
+:w      # Write to file
+:q      # Quit vim
+:q!     # Quit vi even and modifications not save
+
+j       # To move one line down
+k       # To move one line up
+h       # To move one character left
+l       # To move one character right
+
+:n      # Move to line n
+/word   # Search for pattern [n - next, N - previous]
+u       # Undo previous operation
+CTRL+N  # Show possible words for autocomplete
+
+dd      # Delete current line
+Ndd     # Delete N lines
+yy      # Copy current line
+Nyy     # Copy N lines
+p       # Paste in current position from clipboard
+
+# Find each occurrence of 'foo' (in all lines), and replace it with 'bar'.
+:%s/foo/bar/g
+
+# Find each occurrence of 'foo' (in the current line only), and replace it with 'bar'.
+:s/foo/bar/g
+```
+
+**Configuration**
+
+The editor has configuration in file .vimrc into home directory given user. In configuration file you can set some setting shown below.
+
+```
+set encoding=utf8	" Set utf8 as standard encoding and en_US as the standard language
+set number			" Display line numbers
+set tabstop=4			" Tab key is 4-spaces-wide
+
+set ignorecase		" Ignore case when searching
+set smartcase			" When searching try to be smart about cases
+set hlsearch			" Highlight search results
+
+set autoread			" Set to auto read when a file is changed from the outside
+syntax enable			" Enable syntax highlighting
+set history=100     # By default saves your last 8 commands.
+```
+
 
 <a name="userEnvironment"></a>
 ## User environment
-TO-DO
+### Identifying the current user
+As you know, Linux is a multi-user operating system, meaning more than one user can log on at the same time.
 
+* To identify the current user, type **whoami**
+* To list the currently logged-on users, type **wh**
+
+### User Startup Files
+In Linux, the command shell program (generally bash) uses one or more startup files to configure the user environment. Files in the /etc directory define global settings for all users, while initialization files in the user's home directory can include and/or override the global settings.
+
+The startup files can do anything the user would like to do in every command shell, such as:
+
+* Customizing the prompt
+* Defining command line shortcuts and aliases
+* Setting the default text editor
+* Setting the path for where to find executable programs.
+
+### Order of the Startup Files
+The standard prescription is that when you first login to Linux, /etc/profile is read and evaluated, after which the following files are searched (if they exist) in the listed order:
+
+~/.bash_profile
+~/.bash_login
+~/.profile 
+where  ~/. denotes the user's home directory. The Linux login shell evaluates whatever startup file that it comes across first and ignores the rest. This means that if it finds ~/.bash_profile, it ignores ~/.bash_login and ~/.profile. Different distributions may use different startup files. 
+
+However, every time you create a new shell, or terminal window, etc., you do not perform a full system login; only a file named ~/.bashrc file is read and evaluated. Although this file is not read and evaluated along with the login shell, most distributions and/or users include the ~/.bashrc file from within one of the three user-owned startup files.
+
+Most commonly, users only fiddle with ~/.bashrc, as it is invoked every time a new command line shell initiates, or another program is launched from a terminal window, while the other files are read and executed only when the user first logs onto the system.
+
+Recent distributions sometimes do not even have .bash_profile or .bash_login (Ubuntu) and some just have it do little more than include .bashrc.
+
+### The root account
+The root account is very powerful and has full access to the system. Other operating systems often call this the administrator account; in Linux, it is often called the superuser account. You must be extremely cautious before granting full root access to a user; it is rarely, if ever, justified. External attacks often consist of tricks used to elevate to the root account.
+
+However, you can use the sudo feature to assign more limited privileges to user accounts:
+
+* Only on a temporary basis
+* Only for a specific subset of commands.
+
+When assigning elevated privileges, you can use the command su (switch or substitute user) to launch a new shell running as another user (you must type the password of the user you are becoming). Most often, this other user is root, and the new shell allows the use of elevated privileges until it is exited. It is almost always a bad (dangerous for both security and stability) practice to use su to become root. Resulting errors can include deletion of vital files from the system and security breaches.
+
+Granting privileges using sudo is less dangerous and is preferred. By default, sudo must be enabled on a per-user basis. However, some distributions (such as Ubuntu) enable it by default for at least one main user, or give this as an installation option.
+
+### Environment variables
+Environment variables are quantities that have specific values which may be utilized by the command shell, such as bash, or other utilities and applications. Some environment variables are given preset values by the system (which can usually be overriden), while others are set directly by the user, either at the command line or within startup and other scripts.
+
+**Home variable**
+
+HOME is an environment variable that represents the home (or login) directory of the user.
+
+```
+echo $HOME      # show home directory current user
+```
+
+
+**Path variable**
+
+PATH is an ordered list of directories (the path) which is scanned when a command is given to find the appropriate program or script to run.
+
+```
+echo $PATH
+```
+
+**PS1**
+
+PS1 is the primary prompt variable which controls what your command line prompt looks like.
+
+```
+echo $PS1
+    \u - User name
+    \h - Host name
+    \w - Current working directory
+    \! - History number of this command
+    \d - Date
+```
+
+**Shell variable**
+
+The environment variable SHELL points to the user's default command shell (the program that is handling whatever you type in a command window, usually bash) and contains the full pathname to the shell.
+
+```
+echo $SHELL
+```
+
+### File permissions
+In Linux and other UNIX-based operating systems, every file is associated with a user who is the owner. Every file is also associated with a group (a subset of all users) which has an interest in the file and certain rights, or permissions: read, write, and execute.
+
+|Command		|Usage|
+|------------|------|
+|chown			|Used to change user ownership of a file or directory
+|chgrp			|Used to change group ownership
+|chmod			|Used to change the permissions on the file, which can be done separately for owner, group and the rest of the world (often named as other.)
+
+**Order number?**
+
+user: group: other
+
+**What mean single one numbers?**
+
+|Number		| Explain	
+|------------|-------------------
+|4				|if read permission is desired. 
+|2 				|if write permission is desired. 
+|1				|if execute permission is desired.
+ 
+Example assign all permissions for user, read and execute for someone else:
+```
+chmod 755 somefile
+```
+
+<a name="resources"></a>
+## Resources
+* [LFS101x: Introduction to Linux. (Course of university edX)](https://www.edx.org)
+* [TecMint (The Ideal Linux Blog for Syssadmins & geeks)](https://www.tecmint.com)
+* [Computer Hope (Free computer help since 1998)] (https://www.computerhope.com)
+* [HowtoForge (Linux tutorials)](https://www.howtoforge.com)
+* [Tutorials point](https://www.tutorialspoint.com)
 
 
 
