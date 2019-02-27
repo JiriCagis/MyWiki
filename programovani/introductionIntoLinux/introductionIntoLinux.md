@@ -1117,7 +1117,7 @@ chmod 755 somefile
 ## Resources
 * [LFS101x: Introduction to Linux. (Course of university edX)](https://www.edx.org)
 * [TecMint (The Ideal Linux Blog for Syssadmins & geeks)](https://www.tecmint.com)
-* [Computer Hope (Free computer help since 1998)] (https://www.computerhope.com)
+* [Computer Hope (Free computer help since 1998)](https://www.computerhope.com)
 * [HowtoForge (Linux tutorials)](https://www.howtoforge.com)
 * [Tutorials point](https://www.tutorialspoint.com)
 
